@@ -1132,15 +1132,52 @@ select {
 
 
 /* =========================================================
-   MOBILE - MODAL E CAMPO DATA
+   RESPONSIVE
+   ========================================================= */
+
+@media (min-width: 700px) {
+
+    .app-content {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .page {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+    }
+
+    .modal {
+        align-items: center;
+    }
+
+    .modal-content {
+        border-radius: 22px;
+        padding: 26px;
+    }
+
+    .confirm-content {
+        margin: 0;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
    ========================================================= */
 
 @media (max-width: 699px) {
 
     .modal {
-        padding: 0;
         width: 100%;
         max-width: 100%;
+        padding: 0;
     }
 
     .modal-content {
@@ -1158,14 +1195,19 @@ select {
 
     #jobForm {
         width: 100%;
+        max-width: 100%;
         min-width: 0;
     }
 
     #jobForm .form-group {
         width: 100%;
+        max-width: 100%;
         min-width: 0;
-        margin-bottom: 16px;
     }
+
+    /* =====================================================
+       TUTTI I CAMPI DEL FORM
+       ===================================================== */
 
     #jobForm input,
     #jobForm textarea,
@@ -1173,8 +1215,10 @@ select {
         width: 100%;
         max-width: 100%;
         min-width: 0;
+
         box-sizing: border-box;
     }
+
 
     /* =====================================================
        CAMPO DATA
@@ -1183,9 +1227,9 @@ select {
     #jobDate {
         display: block;
 
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
 
         height: 48px;
 
@@ -1203,10 +1247,29 @@ select {
 
         font-family: inherit;
         font-size: 15px;
-        line-height: normal;
+        line-height: 48px;
 
-        -webkit-appearance: auto;
-        appearance: auto;
+        -webkit-appearance: none;
+        appearance: none;
+
+        overflow: hidden;
+    }
+
+    /* Controllo interno della data su iPhone */
+
+    #jobDate::-webkit-date-and-time-value {
+        width: 100%;
+        height: 48px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0;
+        margin: 0;
+
+        line-height: 48px;
+        text-align: center;
     }
 
     #jobDate::-webkit-datetime-edit {
@@ -1220,12 +1283,26 @@ select {
     }
 
     #jobDate::-webkit-calendar-picker-indicator {
-        margin: 0;
-        padding: 0;
-
         width: 18px;
         height: 18px;
+
+        margin: 0;
+        padding: 0;
     }
+
+
+    /* =====================================================
+       TEXTAREA
+       ===================================================== */
+
+    #jobForm textarea {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+    }
+
 }
 
 
@@ -1237,8 +1314,8 @@ select {
 
     #jobDate {
         font-size: 13px;
-        padding-left: 6px;
-        padding-right: 6px;
+        padding-left: 8px;
+        padding-right: 8px;
     }
 
     #jobForm textarea {
@@ -1265,6 +1342,7 @@ select {
     .job-details {
         grid-template-columns: 1fr 1fr;
     }
+
 }
 
 
