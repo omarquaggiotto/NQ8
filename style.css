@@ -1121,7 +1121,6 @@ select {
 
     .modal-content {
         border-radius: 22px;
-
         padding: 26px;
     }
 
@@ -1130,28 +1129,103 @@ select {
     }
 
 }
+
+
 /* =========================================================
-   MOBILE - FORM
+   MOBILE
    ========================================================= */
 
 @media (max-width: 699px) {
 
-    /* DESCRIZIONE */
+    /* MODALE */
 
-    .form-group textarea {
+    .modal {
+        padding: 0 10px;
+    }
+
+    .modal-content {
+        width: 100%;
+        max-width: 520px;
+        min-width: 0;
+
+        padding-left: 18px;
+        padding-right: 18px;
+
+        overflow: hidden;
+    }
+
+
+    /* FORM */
+
+    #jobForm {
         width: 100%;
         min-width: 0;
+    }
+
+    #jobForm .form-group {
+        width: 100%;
+        min-width: 0;
+    }
+
+
+    /* DESCRIZIONE */
+
+    #jobForm textarea {
+        display: block;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
         height: 110px;
         min-height: 110px;
-        max-width: 100%;
 
         padding: 12px 13px;
+
+        box-sizing: border-box;
 
         font-size: 15px;
         line-height: 1.4;
 
-        display: block;
         resize: vertical;
+    }
+
+
+    /* DATA */
+
+    #jobForm .form-group:has(#jobDate) {
+        width: 100%;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    #jobDate {
+        display: block;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        height: 48px;
+
+        padding: 0 8px;
+
+        box-sizing: border-box;
+
+        font-size: 14px;
+
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+
+    /* TUTTI GLI ALTRI INPUT */
+
+    #jobForm input,
+    #jobForm .money-input {
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
     }
 
 }
@@ -1163,20 +1237,16 @@ select {
 
 @media (max-width: 360px) {
 
-    .form-group textarea {
+    #jobDate {
+        font-size: 13px;
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    #jobForm textarea {
         height: 105px;
         min-height: 105px;
     }
-
-    .form-group input[type="date"] {
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-        padding-left: 6px;
-        padding-right: 6px;
-        font-size: 13px;
-    }
-
 
     .page-title h1 {
         font-size: 25px;
@@ -1199,6 +1269,8 @@ select {
     }
 
 }
+
+
 /* =========================================================
    ACCESSIBILITY
    ========================================================= */
@@ -1208,51 +1280,4 @@ input:focus-visible,
 select:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
-}
-@media (max-width: 699px) {
-
-    .modal {
-        padding: 0 10px;
-    }
-
-    .modal-content {
-        width: 100%;
-        max-width: 520px;
-        min-width: 0;
-
-        padding-left: 18px;
-        padding-right: 18px;
-
-        overflow: hidden;
-    }
-
-    #jobForm {
-        width: 100%;
-        min-width: 0;
-    }
-
-    #jobForm .form-group {
-        width: 100%;
-        min-width: 0;
-    }
-
-    #jobForm input,
-    #jobForm textarea,
-    #jobForm .money-input {
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
-    #jobForm input[type="date"] {
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
-        box-sizing: border-box;
-
-        padding: 0 10px;
-
-        font-size: 14px;
-    }
-
 }
