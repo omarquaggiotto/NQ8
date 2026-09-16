@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <meta name="theme-color" content="#111827">
+    <link rel="manifest" href="manifest.json">
+
+    <title>NQ8</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+<header class="app-header">
+
+    <div class="app-title">
+        NQ8
+    </div>
+
+    <button
+        id="settingsButton"
+        class="icon-button"
+        aria-label="Impostazioni"
+        type="button"
+    >
+        ⚙️
+    </button>
+
+</header>
+
+
+    <!-- =========================
+         CONTENUTO PRINCIPALE
+    ========================== -->
+    <main id="appContent" class="app-content">
+
+        <!-- =====================
+             PAGINA RIEPILOGO
+        ====================== -->
+        <section
+            id="page-summary"
+            class="page active"
+        >
+
+            <div class="page-title">
+                <h1>Riepilogo</h1>
+                <p>Situazione dei tuoi lavori</p>
+            </div>
+
+
+            <!-- RIEPILOGO GIORNALIERO -->
+            <div class="summary-section">
+
+                <div class="section-header">
+                    <h2>Oggi</h2>
+                    <span id="todayDate"></span>
+                </div>
+
+                <div class="summary-grid">
+
+                    <div class="summary-card">
+                        <span class="summary-label">
+                            Lavori
+                        </span>
+
+                        <strong id="todayJobs">
+                            0
+                        </strong>
+                    </div>
+
+
+                    <div class="summary-card">
+                        <span class="summary-label">
+                            Costi
+                        </span>
+
+                        <strong id="todayCosts">
+                            € 0,00
+                        </strong>
+                    </div>
+
+
+                    <div class="summary-card">
+                        <span class="summary-label">
+                            Ricavi
+                        </span>
+
+                        <strong id="todayRevenue">
+                            € 0,00
+                        </strong>
+                    </div>
+
+
+                    <div class="summary-card highlight">
+                        <span class="summary-label">
+                            Guadagno
+                        </span>
+
+                        <strong id="todayProfit">
+                            € 0,00
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIEPILOGO MENSILE -->
+            <div class="summary-section">
+
+                <div class="section-header">
+                    <h2>Questo mese</h2>
+                    <span id="currentMonth"></span>
+                </div>
+
+                <div class="summary-grid">
+
+                    <div class="summary-card">
+                        <span class="summary-label">
+                            Lavori
+                        </span>
+
+                        <strong id="monthJobs">
+                            0
+                        </strong>
+                    </div>
+
+
+                    <div class="summary-card">
+                        <span class="summary-label">
+                            Costi
+                        </span>
+
+                        <strong id="monthCosts">
+                            € 0,00
+                        </strong>
+                    </div>
+
+
+                    <div class="summary-card">
+                        <span class="summary-label">
+                            Ricavi
+                        </span>
+
+                        <strong id="monthRevenue">
+                            € 0,00
+                        </strong>
+                    </div>
+
+
+                    <div class="summary-card highlight">
+                        <span class="summary-label">
+                            Guadagno
+                        </span>
+
+                        <strong id="monthProfit">
+                            € 0,00
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIEPILOGO ANNUALE -->
+            <div class="summary-section">
+
+                <div class="section-header">
+                    <h2>Quest'anno</h2>
+                    <span id="currentYear"></span>
+                </div>
+
+                <div class="summary-grid">
+
+                    <div class="summary-card">
+                        <span class="summary-label">
+                            Lavori
+                        </span>
+
+                        <strong id="yearJobs">
+                            0
+                        </strong>
+                    </div>
+
+
+                    <div class="summary-card">
+                        <span class="summary-label">
+                            Costi
+                        </span>
+
+                        <strong id="yearCosts">
+                            € 0,00
+                        </strong>
+                    </div>
+
+
+                    <div class="summary-card">
+                        <span class="summary-label">
+                            Ricavi
+                        </span>
+
+                        <strong id="yearRevenue">
+                            € 0,00
+                        </strong>
+                    </div>
+
+
+                    <div class="summary-card highlight">
+                        <span class="summary-label">
+                            Guadagno
+                        </span>
+
+                        <strong id="yearProfit">
+                            € 0,00
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PAGINA LAVORI
+        ========================== -->
+        <section
+            id="page-jobs"
+            class="page"
+        >
+
+            <div class="page-title">
+                <h1>Lavori</h1>
+                <p>Gestisci tutti i lavori</p>
+            </div>
+
+
+            <!-- FILTRI -->
+            <div class="filters-card">
+
+                <div class="filters-title">
+                    Filtra lavori
+                </div>
+
+
+                <div class="filter-row">
+
+                    <div class="filter-field">
+                        <label for="filterYear">
+                            Anno
+                        </label>
+
+                        <select id="filterYear">
+                            <option value="">
+                                Tutti
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <div class="filter-field">
+                        <label for="filterMonth">
+                            Mese
+                        </label>
+
+                        <select id="filterMonth">
+                            <option value="">
+                                Tutti
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <div class="filter-field">
+                        <label for="filterDay">
+                            Giorno
+                        </label>
+
+                        <select id="filterDay">
+                            <option value="">
+                                Tutti
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <div class="filter-field full">
+
+                    <label for="filterClient">
+                        Cliente
+                    </label>
+
+                    <input
+                        type="text"
+                        id="filterClient"
+                        placeholder="Cerca cliente..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <button
+                    id="resetFilters"
+                    class="secondary-button"
+                    type="button"
+                >
+                    Azzera filtri
+                </button>
+
+            </div>
+
+
+            <!-- ELENCO LAVORI -->
+            <div
+                id="jobsList"
+                class="jobs-list"
+            >
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        📋
+                    </div>
+
+                    <h3>
+                        Nessun lavoro
+                    </h3>
+
+                    <p>
+                        Premi il pulsante + per aggiungere il primo lavoro.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PAGINA IMPOSTAZIONI
+        ========================== -->
+        <section
+            id="page-settings"
+            class="page"
+        >
+
+            <div class="page-title">
+                <h1>Impostazioni</h1>
+                <p>Gestione dell'applicazione e dei dati</p>
+            </div>
+
+
+            <div class="settings-list">
+
+                <button
+                    id="exportData"
+                    class="settings-item"
+                    type="button"
+                >
+
+                    <div class="settings-icon">
+                        📤
+                    </div>
+
+                    <div class="settings-text">
+                        <strong>
+                            Esporta dati
+                        </strong>
+
+                        <span>
+                            Crea un backup completo dei lavori
+                        </span>
+                    </div>
+
+                </button>
+
+
+                <button
+                    id="importData"
+                    class="settings-item"
+                    type="button"
+                >
+
+                    <div class="settings-icon">
+                        📥
+                    </div>
+
+                    <div class="settings-text">
+                        <strong>
+                            Importa dati
+                        </strong>
+
+                        <span>
+                            Ripristina un backup precedente
+                        </span>
+                    </div>
+
+                </button>
+
+
+                <div class="settings-divider"></div>
+
+
+                <div class="settings-info">
+
+                    <span>
+                        NQ8
+                    </span>
+
+                    <small>
+                        Gestione lavori
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         MODALE NUOVO LAVORO
+    ========================== -->
+    <div
+        id="jobModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-overlay"></div>
+
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+                    <h2 id="jobModalTitle">
+                        Nuovo lavoro
+                    </h2>
+
+                    <p>
+                        Inserisci i dati del lavoro
+                    </p>
+                </div>
+
+                <button
+                    id="closeJobModal"
+                    class="modal-close"
+                    type="button"
+                    aria-label="Chiudi"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="jobForm">
+
+                <input
+                    type="hidden"
+                    id="jobId"
+                >
+
+
+                <div class="form-group">
+
+                    <label for="clientName">
+                        Nome cliente
+                    </label>
+
+                    <input
+                        type="text"
+                        id="clientName"
+                        placeholder="Es. Mario Rossi"
+                        autocomplete="off"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="jobDate">
+                        Data
+                    </label>
+
+                    <input
+                        type="date"
+                        id="jobDate"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="jobCost">
+                        Costo lavoro
+                    </label>
+
+                    <div class="money-input">
+
+                        <span>
+                            €
+                        </span>
+
+                        <input
+                            type="number"
+                            id="jobCost"
+                            placeholder="0,00"
+                            min="0"
+                            step="0.01"
+                            inputmode="decimal"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="jobRevenue">
+                        Ricavo lavoro
+                    </label>
+
+                    <div class="money-input">
+
+                        <span>
+                            €
+                        </span>
+
+                        <input
+                            type="number"
+                            id="jobRevenue"
+                            placeholder="0,00"
+                            min="0"
+                            step="0.01"
+                            inputmode="decimal"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- GUADAGNO AUTOMATICO -->
+                <div class="profit-preview">
+
+                    <span>
+                        Guadagno
+                    </span>
+
+                    <strong id="jobProfitPreview">
+                        € 0,00
+                    </strong>
+
+                </div>
+
+
+                <div class="modal-actions">
+
+                    <button
+                        id="cancelJob"
+                        class="secondary-button"
+                        type="button"
+                    >
+                        Annulla
+                    </button>
+
+                    <button
+                        class="primary-button"
+                        type="submit"
+                    >
+                        Salva lavoro
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MODALE CONFERMA ELIMINAZIONE
+    ========================== -->
+    <div
+        id="deleteModal"
+        class="modal hidden"
+    >
+
+        <div class="modal-overlay"></div>
+
+
+        <div class="confirm-content">
+
+            <div class="confirm-icon">
+                🗑️
+            </div>
+
+            <h2>
+                Eliminare il lavoro?
+            </h2>
+
+            <p>
+                Questa operazione non può essere annullata.
+            </p>
+
+            <div class="modal-actions">
+
+                <button
+                    id="cancelDelete"
+                    class="secondary-button"
+                    type="button"
+                >
+                    Annulla
+                </button>
+
+                <button
+                    id="confirmDelete"
+                    class="danger-button"
+                    type="button"
+                >
+                    Elimina
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         INPUT FILE PER IMPORTAZIONE
+    ========================== -->
+    <input
+        type="file"
+        id="importFile"
+        accept=".json,.nq8"
+        hidden
+    >
+
+
+    <!-- =========================
+         BARRA DI NAVIGAZIONE
+    ========================== -->
+    <nav class="bottom-navigation">
+
+        <button
+            class="nav-button active"
+            data-page="summary"
+            type="button"
+        >
+
+            <span class="nav-icon">
+                📊
+            </span>
+
+            <span class="nav-label">
+                Riepilogo
+            </span>
+
+        </button>
+
+
+        <button
+            id="newJobButton"
+            class="nav-add-button"
+            type="button"
+            aria-label="Nuovo lavoro"
+        >
+
+            <span>
+                +
+            </span>
+
+        </button>
+
+
+        <button
+            class="nav-button"
+            data-page="jobs"
+            type="button"
+        >
+
+            <span class="nav-icon">
+                📋
+            </span>
+
+            <span class="nav-label">
+                Lavori
+            </span>
+
+        </button>
+
+    </nav>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="database.js"></script>
+    <script src="backup.js"></script>
+    <script src="app.js"></script>
+
+    <script>
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("./service-worker.js")
+                .then(() => {
+                    console.log("NQ8: Service Worker registrato.");
+                })
+                .catch((error) => {
+                    console.error("NQ8: errore Service Worker:", error);
+                });
+        });
+    }
+</script>
+
+</body>
+</html>

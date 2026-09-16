@@ -1,0 +1,1133 @@
+/* =========================================================
+   NQ8 - STYLE
+   ========================================================= */
+
+:root {
+    --background: #f4f6f8;
+    --surface: #ffffff;
+    --surface-soft: #f8fafc;
+
+    --text: #17202a;
+    --text-secondary: #68737d;
+    --text-light: #9aa4ad;
+
+    --primary: #111827;
+    --primary-light: #1f2937;
+
+    --border: #e5e9ee;
+
+    --success: #16803c;
+    --success-soft: #eaf7ef;
+
+    --danger: #d92d20;
+    --danger-soft: #fff0ef;
+
+    --shadow: 0 4px 18px rgba(15, 23, 42, 0.07);
+
+    --radius: 16px;
+    --radius-small: 10px;
+
+    --header-height: 62px;
+    --navigation-height: 76px;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    min-height: 100%;
+    background: var(--background);
+    color: var(--text);
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+
+    overflow-x: hidden;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    border: 0;
+    cursor: pointer;
+}
+
+input,
+select {
+    outline: none;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: var(--header-height);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+    background: var(--surface);
+
+    border-bottom: 1px solid var(--border);
+
+    z-index: 100;
+}
+
+.app-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.icon-button {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+
+    border-radius: 50%;
+
+    font-size: 20px;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+.icon-button:active {
+    background: var(--background);
+    transform: scale(0.92);
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.app-content {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    padding-top: calc(var(--header-height) + 18px);
+    padding-bottom: calc(var(--navigation-height) + 24px);
+}
+
+.page {
+    display: none;
+
+    padding: 0 16px;
+}
+
+.page.active {
+    display: block;
+}
+
+
+/* =========================================================
+   PAGE TITLE
+   ========================================================= */
+
+.page-title {
+    margin-bottom: 22px;
+}
+
+.page-title h1 {
+    font-size: 28px;
+    line-height: 1.15;
+
+    font-weight: 800;
+
+    margin-bottom: 6px;
+}
+
+.page-title p {
+    color: var(--text-secondary);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.summary-section {
+    margin-bottom: 26px;
+}
+
+.section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.section-header h2 {
+    font-size: 18px;
+    font-weight: 750;
+}
+
+.section-header span {
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+   ========================================================= */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+.summary-card {
+    min-height: 100px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 16px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+}
+
+.summary-card.highlight {
+    background: var(--success-soft);
+
+    border-color: rgba(22, 128, 60, 0.12);
+}
+
+.summary-label {
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.summary-card strong {
+    font-size: 21px;
+    font-weight: 800;
+}
+
+.summary-card.highlight strong {
+    color: var(--success);
+}
+
+
+/* =========================================================
+   FILTERS
+   ========================================================= */
+
+.filters-card {
+    padding: 16px;
+
+    margin-bottom: 18px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+}
+
+.filters-title {
+    margin-bottom: 14px;
+
+    font-size: 16px;
+    font-weight: 750;
+}
+
+.filter-row {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin-bottom: 12px;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+.filter-field.full {
+    margin-bottom: 12px;
+}
+
+.filter-field label {
+    color: var(--text-secondary);
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.filter-field input,
+.filter-field select {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 11px;
+
+    background: var(--surface-soft);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+
+    color: var(--text);
+
+    font-size: 14px;
+}
+
+.filter-field input:focus,
+.filter-field select:focus {
+    border-color: var(--primary);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.primary-button,
+.secondary-button,
+.danger-button {
+    min-height: 44px;
+
+    padding: 0 18px;
+
+    border-radius: var(--radius-small);
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        transform 0.12s ease,
+        opacity 0.12s ease;
+}
+
+.primary-button {
+    background: var(--primary);
+    color: #ffffff;
+}
+
+.secondary-button {
+    background: var(--surface-soft);
+    color: var(--text);
+
+    border: 1px solid var(--border);
+}
+
+.danger-button {
+    background: var(--danger);
+    color: #ffffff;
+}
+
+.primary-button:active,
+.secondary-button:active,
+.danger-button:active {
+    transform: scale(0.97);
+}
+
+.primary-button:hover,
+.secondary-button:hover,
+.danger-button:hover {
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   JOB LIST
+   ========================================================= */
+
+.jobs-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.job-card {
+    position: relative;
+
+    padding: 16px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+}
+
+.job-card:active {
+    transform: scale(0.99);
+}
+
+.job-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 12px;
+}
+
+.job-client {
+    font-size: 16px;
+    font-weight: 750;
+}
+
+.job-date {
+    flex-shrink: 0;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+.job-details {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 8px;
+}
+
+.job-detail {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.job-detail span {
+    color: var(--text-light);
+
+    font-size: 11px;
+}
+
+.job-detail strong {
+    font-size: 14px;
+}
+
+.job-detail.profit strong {
+    color: var(--success);
+}
+
+.job-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    margin-top: 14px;
+
+    padding-top: 12px;
+
+    border-top: 1px solid var(--border);
+}
+
+.job-action-button {
+    min-height: 36px;
+
+    padding: 0 12px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.edit-job-button {
+    background: var(--surface-soft);
+
+    color: var(--text);
+}
+
+.delete-job-button {
+    background: var(--danger-soft);
+
+    color: var(--danger);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-state {
+    padding: 42px 20px;
+
+    text-align: center;
+
+    background: var(--surface);
+
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+}
+
+.empty-icon {
+    margin-bottom: 12px;
+
+    font-size: 38px;
+}
+
+.empty-state h3 {
+    margin-bottom: 6px;
+
+    font-size: 17px;
+}
+
+.empty-state p {
+    max-width: 280px;
+
+    margin: 0 auto;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+.settings-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.settings-item {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 15px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+
+    text-align: left;
+
+    box-shadow: var(--shadow);
+}
+
+.settings-item:active {
+    transform: scale(0.99);
+}
+
+.settings-icon {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--surface-soft);
+
+    border-radius: 11px;
+
+    font-size: 19px;
+}
+
+.settings-text {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+.settings-text strong {
+    font-size: 14px;
+}
+
+.settings-text span {
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+.settings-divider {
+    height: 1px;
+
+    margin: 10px 0;
+
+    background: var(--border);
+}
+
+.settings-info {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 4px;
+
+    padding: 20px;
+
+    color: var(--text-secondary);
+
+    text-align: center;
+}
+
+.settings-info span {
+    color: var(--text);
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.settings-info small {
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 500;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(15, 23, 42, 0.55);
+
+    backdrop-filter: blur(2px);
+}
+
+.modal-content,
+.confirm-content {
+    position: relative;
+
+    width: 100%;
+    max-width: 520px;
+
+    background: var(--surface);
+
+    border-radius:
+        22px
+        22px
+        0
+        0;
+
+    padding: 22px 18px 24px;
+
+    box-shadow:
+        0 -8px 35px rgba(15, 23, 42, 0.16);
+
+    animation: modalUp 0.2s ease;
+}
+
+.confirm-content {
+    margin: 16px;
+
+    border-radius: 22px;
+
+    padding: 26px 20px;
+
+    text-align: center;
+}
+
+@keyframes modalUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   MODAL HEADER
+   ========================================================= */
+
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 22px;
+}
+
+.modal-header h2 {
+    margin-bottom: 4px;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.modal-header p {
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+.modal-close {
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--surface-soft);
+
+    border-radius: 50%;
+
+    color: var(--text-secondary);
+
+    font-size: 25px;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.form-group input {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 13px;
+
+    background: var(--surface-soft);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
+
+    color: var(--text);
+
+    font-size: 15px;
+}
+
+.form-group input:focus {
+    border-color: var(--primary);
+}
+
+.money-input {
+    position: relative;
+}
+
+.money-input > span {
+    position: absolute;
+
+    left: 13px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: var(--text-secondary);
+
+    font-size: 14px;
+    font-weight: 700;
+
+    pointer-events: none;
+}
+
+.money-input input {
+    padding-left: 32px;
+}
+
+
+/* =========================================================
+   PROFIT PREVIEW
+   ========================================================= */
+
+.profit-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 14px 15px;
+
+    margin-top: 4px;
+    margin-bottom: 20px;
+
+    background: var(--success-soft);
+
+    border: 1px solid rgba(22, 128, 60, 0.12);
+
+    border-radius: var(--radius-small);
+}
+
+.profit-preview span {
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+.profit-preview strong {
+    color: var(--success);
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   MODAL ACTIONS
+   ========================================================= */
+
+.modal-actions {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+}
+
+.modal-actions button {
+    width: 100%;
+}
+
+
+/* =========================================================
+   CONFIRM DELETE
+   ========================================================= */
+
+.confirm-icon {
+    margin-bottom: 12px;
+
+    font-size: 40px;
+}
+
+.confirm-content h2 {
+    margin-bottom: 7px;
+
+    font-size: 20px;
+}
+
+.confirm-content p {
+    margin-bottom: 22px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BOTTOM NAVIGATION
+   ========================================================= */
+
+.bottom-navigation {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: var(--navigation-height);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    padding:
+        7px
+        max(10px, env(safe-area-inset-right))
+        calc(7px + env(safe-area-inset-bottom))
+        max(10px, env(safe-area-inset-left));
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border-top: 1px solid var(--border);
+
+    backdrop-filter: blur(12px);
+
+    z-index: 200;
+}
+
+.nav-button {
+    width: 90px;
+    height: 60px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    background: transparent;
+
+    color: var(--text-light);
+
+    border-radius: 12px;
+
+    transition:
+        color 0.15s ease,
+        background 0.15s ease;
+}
+
+.nav-button.active {
+    color: var(--text);
+}
+
+.nav-button:active {
+    background: var(--background);
+}
+
+.nav-icon {
+    font-size: 19px;
+
+    line-height: 1;
+}
+
+.nav-label {
+    font-size: 11px;
+    font-weight: 650;
+}
+
+
+/* =========================================================
+   CENTRAL ADD BUTTON
+   ========================================================= */
+
+.nav-add-button {
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: -22px;
+
+    background: var(--primary);
+
+    color: #ffffff;
+
+    border-radius: 50%;
+
+    border: 5px solid var(--background);
+
+    box-shadow:
+        0 5px 18px rgba(15, 23, 42, 0.22);
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+}
+
+.nav-add-button span {
+    margin-top: -2px;
+
+    font-size: 30px;
+    font-weight: 300;
+
+    line-height: 1;
+}
+
+.nav-add-button:active {
+    transform: scale(0.92);
+    box-shadow:
+        0 3px 10px rgba(15, 23, 42, 0.18);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (min-width: 700px) {
+
+    .app-content {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .page {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(4, minmax(0, 1fr));
+    }
+
+    .modal {
+        align-items: center;
+    }
+
+    .modal-content {
+        border-radius: 22px;
+
+        padding: 26px;
+    }
+
+    .confirm-content {
+        margin: 0;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .page-title h1 {
+        font-size: 25px;
+    }
+
+    .summary-card {
+        padding: 13px;
+    }
+
+    .summary-card strong {
+        font-size: 18px;
+    }
+
+    .filter-row {
+        grid-template-columns: 1fr;
+    }
+
+    .job-details {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}

@@ -1,0 +1,21 @@
+{
+    "name": "NQ8",
+    "short_name": "NQ8",
+    "description": "Gestione lavori e clienti NQ8",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#f8fafc",
+    "theme_color": "#111827",
+    "lang": "it",
+    "id": "./",
+    "icons": [
+        {
+            "src": "assets/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
