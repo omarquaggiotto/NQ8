@@ -1297,3 +1297,12 @@ select:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
+
+@media (max-width: 699px) {
+
+    #jobForm input[type="date"] {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+}
