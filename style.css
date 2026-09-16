@@ -1132,21 +1132,23 @@ select {
 
 
 /* =========================================================
-   MOBILE
+   MOBILE - MODAL E CAMPO DATA
    ========================================================= */
 
 @media (max-width: 699px) {
 
-    /* MODALE */
-
     .modal {
-        padding: 0 10px;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
     }
 
     .modal-content {
-        width: 100%;
+        width: calc(100% - 20px);
         max-width: 520px;
         min-width: 0;
+
+        margin: 0 auto;
 
         padding-left: 18px;
         padding-right: 18px;
@@ -1154,51 +1156,63 @@ select {
         overflow: hidden;
     }
 
-
-    /* FORM */
-
-    #jobForm {
-        width: 100%;
-        min-width: 0;
-    }
-
+    #jobForm,
     #jobForm .form-group {
         width: 100%;
+        max-width: 100%;
         min-width: 0;
     }
 
+    #jobForm input,
+    #jobForm textarea,
+    #jobForm .money-input {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
 
-    /* DESCRIZIONE */
+    /* CAMPO DATA */
 
-    #jobForm textarea {
+    #jobForm input[type="date"] {
         display: block;
 
         width: 100%;
         max-width: 100%;
         min-width: 0;
 
-        height: 110px;
-        min-height: 110px;
-
-        padding: 12px 13px;
+        height: 48px;
 
         box-sizing: border-box;
 
-        font-size: 15px;
-        line-height: 1.4;
+        padding: 0 8px;
 
-        resize: vertical;
+        font-size: 15px;
+        line-height: normal;
+
+        overflow: hidden;
+
+        -webkit-appearance: none;
+        appearance: none;
     }
 
+    #jobForm input[type="date"]::-webkit-datetime-edit {
+        padding: 0;
+        margin: 0;
+    }
 
-    /* DATA */
+    #jobForm input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+        padding: 0;
+        margin: 0;
+    }
 
-    #jobForm .form-group:has(#jobDate) {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
+    #jobForm input[type="date"]::-webkit-calendar-picker-indicator {
+        margin: 0;
+        padding: 0;
+        width: 18px;
+        height: 18px;
+    }
 }
-
     #jobDate {
     display: block;
 
