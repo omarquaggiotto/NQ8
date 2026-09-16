@@ -1130,13 +1130,46 @@ select {
     }
 
 }
+/* =========================================================
+   MOBILE - FORM
+   ========================================================= */
+
 @media (max-width: 699px) {
+
+    /* DESCRIZIONE */
+
+    .form-group textarea {
+        width: 100%;
+        min-width: 0;
+        height: 110px;
+        min-height: 110px;
+        max-width: 100%;
+
+        padding: 12px 13px;
+
+        font-size: 15px;
+        line-height: 1.4;
+
+        display: block;
+        resize: vertical;
+    }
+
+
+    /* DATA */
 
     .form-group input[type="date"] {
         width: 100%;
-        max-width: 100%;
         min-width: 0;
+        max-width: 100%;
+
+        height: 48px;
+
+        padding: 0 8px;
+
         font-size: 14px;
+
+        box-sizing: border-box;
+        display: block;
     }
 
 }
@@ -1148,11 +1181,20 @@ select {
 
 @media (max-width: 360px) {
 
+    .form-group textarea {
+        height: 105px;
+        min-height: 105px;
+    }
+
     .form-group input[type="date"] {
         width: 100%;
-        max-width: 100%;
         min-width: 0;
+        max-width: 100%;
+        padding-left: 6px;
+        padding-right: 6px;
+        font-size: 13px;
     }
+
 
     .page-title h1 {
         font-size: 25px;
@@ -1171,8 +1213,7 @@ select {
     }
 
     .job-details {
-        grid-template-columns:
-            1fr 1fr;
+        grid-template-columns: 1fr 1fr;
     }
 
 }
