@@ -1154,22 +1154,6 @@ select {
         resize: vertical;
     }
 
-
-    /* DATA */
-
-    .form-group input[type="date"] {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-
-        box-sizing: border-box;
-
-        padding-left: 13px;
-        padding-right: 13px;
-
-        font-size: 15px;
-    }
-
 }
 
 
@@ -1224,4 +1208,51 @@ input:focus-visible,
 select:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
+}
+@media (max-width: 699px) {
+
+    .modal {
+        padding: 0 10px;
+    }
+
+    .modal-content {
+        width: 100%;
+        max-width: 520px;
+        min-width: 0;
+
+        padding-left: 18px;
+        padding-right: 18px;
+
+        overflow: hidden;
+    }
+
+    #jobForm {
+        width: 100%;
+        min-width: 0;
+    }
+
+    #jobForm .form-group {
+        width: 100%;
+        min-width: 0;
+    }
+
+    #jobForm input,
+    #jobForm textarea,
+    #jobForm .money-input {
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    #jobForm input[type="date"] {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
+
+        padding: 0 10px;
+
+        font-size: 14px;
+    }
+
 }
