@@ -1175,9 +1175,9 @@ select {
 @media (max-width: 699px) {
 
     .modal {
+        padding: 0;
         width: 100%;
         max-width: 100%;
-        padding: 0;
     }
 
     .modal-content {
@@ -1193,21 +1193,12 @@ select {
         overflow: hidden;
     }
 
-    #jobForm {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-    }
-
+    #jobForm,
     #jobForm .form-group {
         width: 100%;
         max-width: 100%;
         min-width: 0;
     }
-
-    /* =====================================================
-       TUTTI I CAMPI DEL FORM
-       ===================================================== */
 
     #jobForm input,
     #jobForm textarea,
@@ -1221,22 +1212,23 @@ select {
 
 
     /* =====================================================
-       CAMPO DATA
+       DATA
        ===================================================== */
 
     #jobDate {
         display: block;
 
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
 
         height: 48px;
 
-        margin: 0;
-        padding: 0 13px;
-
         box-sizing: border-box;
+
+        padding: 0 8px;
+
+        margin: 0;
 
         background: var(--surface-soft);
 
@@ -1245,30 +1237,18 @@ select {
 
         color: var(--text);
 
-        font-family: inherit;
         font-size: 15px;
-        line-height: 48px;
 
-        -webkit-appearance: none;
-        appearance: none;
-
-        overflow: hidden;
+        -webkit-appearance: auto;
+        appearance: auto;
     }
 
-    /* Controllo interno della data su iPhone */
+    /*
+       NON TOCCHIAMO LA LARGHEZZA DEL CONTROLLO INTERNO.
+       Modifichiamo solamente l'allineamento del testo.
+    */
 
     #jobDate::-webkit-date-and-time-value {
-        width: 100%;
-        height: 48px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        padding: 0;
-        margin: 0;
-
-        line-height: 48px;
         text-align: center;
     }
 
@@ -1283,24 +1263,11 @@ select {
     }
 
     #jobDate::-webkit-calendar-picker-indicator {
-        width: 18px;
-        height: 18px;
-
         margin: 0;
         padding: 0;
-    }
 
-
-    /* =====================================================
-       TEXTAREA
-       ===================================================== */
-
-    #jobForm textarea {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-
-        box-sizing: border-box;
+        width: 18px;
+        height: 18px;
     }
 
 }
@@ -1314,8 +1281,9 @@ select {
 
     #jobDate {
         font-size: 13px;
-        padding-left: 8px;
-        padding-right: 8px;
+
+        padding-left: 6px;
+        padding-right: 6px;
     }
 
     #jobForm textarea {
