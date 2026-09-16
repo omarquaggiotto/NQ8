@@ -961,8 +961,10 @@ textarea {
     font-family: inherit;
     font-size: 15px;
 
-    -webkit-appearance: auto;
-    appearance: auto;
+    -webkit-appearance: none;
+    appearance: none;
+
+    text-align: center;
 }
 
 .date-input-wrapper input[type="date"]:focus {
