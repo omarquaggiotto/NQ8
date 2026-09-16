@@ -1200,7 +1200,8 @@ select {
     }
 
     #jobDate {
-    display: block;
+    display: flex;
+    align-items: center;
 
     width: 100%;
     max-width: 100%;
@@ -1213,7 +1214,6 @@ select {
     box-sizing: border-box;
 
     font-size: 14px;
-    line-height: 48px;
 
     appearance: none;
     -webkit-appearance: none;
