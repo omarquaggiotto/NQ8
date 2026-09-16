@@ -1147,7 +1147,6 @@ select {
         width: calc(100% - 20px);
         max-width: 520px;
         min-width: 0;
-
         margin: 0 auto;
 
         padding-left: 18px;
@@ -1172,12 +1171,9 @@ select {
         box-sizing: border-box;
     }
 
+    /* CAMPO DATA */
 
-    /* =====================================================
-       CAMPO DATA
-       ===================================================== */
-
-    #jobForm input[type="date"] {
+    #jobDate {
         display: block;
 
         width: 100%;
@@ -1190,10 +1186,7 @@ select {
 
         padding: 0 8px;
 
-        margin: 0;
-
         font-size: 15px;
-        line-height: 48px;
 
         background: var(--surface-soft);
         border: 1px solid var(--border);
@@ -1204,58 +1197,25 @@ select {
         -webkit-appearance: auto;
         appearance: auto;
 
-        text-align: center;
+        vertical-align: middle;
     }
 
-
-    /* Rendering interno della data su Chrome/Android */
-
-    #jobForm input[type="date"]::-webkit-datetime-edit {
-        padding: 0;
-        margin: 0;
-
-        line-height: 48px;
-    }
-
-    #jobForm input[type="date"]::-webkit-datetime-edit-fields-wrapper {
-        padding: 0;
-        margin: 0;
-
-        line-height: 48px;
-    }
-
-    #jobForm input[type="date"]::-webkit-datetime-edit-text {
+    #jobDate::-webkit-datetime-edit {
         padding: 0;
         margin: 0;
     }
 
-    #jobForm input[type="date"]::-webkit-calendar-picker-indicator {
+    #jobDate::-webkit-datetime-edit-fields-wrapper {
+        padding: 0;
+        margin: 0;
+    }
+
+    #jobDate::-webkit-calendar-picker-indicator {
         margin: 0;
         padding: 0;
-
         width: 18px;
         height: 18px;
     }
-}
-
-
-/* =========================================================
-   SMALL PHONES
-   ========================================================= */
-
-@media (max-width: 360px) {
-
-    #jobForm input[type="date"] {
-        font-size: 13px;
-        padding-left: 6px;
-        padding-right: 6px;
-    }
-
-    #jobForm textarea {
-        height: 105px;
-        min-height: 105px;
-    }
-
 }
 
 
@@ -1295,10 +1255,7 @@ select {
     .job-details {
         grid-template-columns: 1fr 1fr;
     }
-
 }
-
-
 /* =========================================================
    ACCESSIBILITY
    ========================================================= */
