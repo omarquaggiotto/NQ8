@@ -1156,11 +1156,15 @@ select {
         overflow: hidden;
     }
 
-    #jobForm,
+    #jobForm {
+        width: 100%;
+        min-width: 0;
+    }
+
     #jobForm .form-group {
         width: 100%;
-        max-width: 100%;
         min-width: 0;
+        margin-bottom: 16px;
     }
 
     #jobForm input,
@@ -1177,31 +1181,33 @@ select {
        ===================================================== */
 
     #jobDate {
-    display: block;
+        display: block;
 
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
 
-    height: 48px;
+        height: 48px;
 
-    box-sizing: border-box;
+        margin: 0;
+        padding: 0 13px;
 
-    margin: 0;
-    padding: 0 8px;
+        box-sizing: border-box;
 
-    background: var(--surface-soft);
+        background: var(--surface-soft);
 
-    border: 1px solid var(--border);
-    border-radius: var(--radius-small);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-small);
 
-    color: var(--text);
+        color: var(--text);
 
-    font-size: 15px;
+        font-family: inherit;
+        font-size: 15px;
+        line-height: normal;
 
-    -webkit-appearance: auto;
-    appearance: auto;
-}
+        -webkit-appearance: auto;
+        appearance: auto;
+    }
 
     #jobDate::-webkit-datetime-edit {
         padding: 0;
