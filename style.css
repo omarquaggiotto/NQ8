@@ -965,6 +965,7 @@ textarea {
     appearance: none;
 
     text-align: center;
+    line-height: 48px;
 }
 
 .date-input-wrapper input[type="date"]:focus {
