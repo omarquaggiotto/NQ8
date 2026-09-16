@@ -117,6 +117,9 @@ function cacheElements() {
     elements.clientName =
         document.getElementById("clientName");
 
+   elements.jobDescription =
+    document.getElementById("jobDescription");
+
 
     elements.jobDate =
         document.getElementById("jobDate");
@@ -425,6 +428,8 @@ function openEditJobModal(id) {
     elements.clientName.value =
         job.cliente;
 
+    elements.jobDescription.value =
+        job.descrizione || "";
 
     elements.jobDate.value =
         job.data;
@@ -501,6 +506,8 @@ function saveJob(event) {
     const cliente =
         elements.clientName.value.trim();
 
+    const descrizione =
+        elements.jobDescription.value.trim();
 
     const data =
         elements.jobDate.value;
@@ -580,6 +587,8 @@ function saveJob(event) {
 
             data,
 
+            descrizione,
+
             costo,
 
             ricavo,
@@ -607,6 +616,8 @@ function saveJob(event) {
         const newJob = {
 
             cliente,
+
+            descrizione,
 
             data,
 
