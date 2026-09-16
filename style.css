@@ -454,6 +454,19 @@ select {
     font-size: 12px;
 }
 
+.job-description {
+    margin-bottom: 14px;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+    line-height: 1.45;
+
+    white-space: pre-wrap;
+
+    overflow-wrap: anywhere;
+}
+
 .job-details {
     display: grid;
 
