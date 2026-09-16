@@ -1147,6 +1147,7 @@ select {
         width: calc(100% - 20px);
         max-width: 520px;
         min-width: 0;
+
         margin: 0 auto;
 
         padding-left: 18px;
@@ -1171,34 +1172,37 @@ select {
         box-sizing: border-box;
     }
 
-    /* CAMPO DATA */
+    /* =====================================================
+       CAMPO DATA
+       ===================================================== */
 
-    #jobDate {
-        display: block;
+   #jobDate {
+    display: block;
 
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
 
-        height: 48px;
+    height: 48px;
 
-        box-sizing: border-box;
+    box-sizing: border-box;
 
-        padding: 0 8px;
+    padding: 0 13px;
 
-        font-size: 15px;
+    margin: 0;
 
-        background: var(--surface-soft);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-small);
+    background: var(--surface-soft);
 
-        color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-small);
 
-        -webkit-appearance: auto;
-        appearance: auto;
+    color: var(--text);
 
-        vertical-align: middle;
-    }
+    font-size: 15px;
+
+    -webkit-appearance: auto;
+    appearance: auto;
+}
 
     #jobDate::-webkit-datetime-edit {
         padding: 0;
@@ -1213,6 +1217,7 @@ select {
     #jobDate::-webkit-calendar-picker-indicator {
         margin: 0;
         padding: 0;
+
         width: 18px;
         height: 18px;
     }
@@ -1256,6 +1261,8 @@ select {
         grid-template-columns: 1fr 1fr;
     }
 }
+
+
 /* =========================================================
    ACCESSIBILITY
    ========================================================= */
@@ -1266,4 +1273,3 @@ select:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
-
