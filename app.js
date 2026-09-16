@@ -866,6 +866,11 @@ function renderJobCard(job) {
 
             </div>
 
+               ${job.descrizione ? `
+                <div class="job-description">
+                    ${escapeHtml(job.descrizione)}
+                      </div>
+               ` : ""}
 
             <div class="job-details">
 
