@@ -1276,3 +1276,30 @@ select:focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
 }
+/* =========================================================
+   FIX DATA - TELEFONO ORIZZONTALE
+   ========================================================= */
+
+@media (max-width: 699px) and (orientation: landscape) {
+
+    #jobDate {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        box-sizing: border-box;
+
+        padding-left: 4px;
+        padding-right: 4px;
+
+        font-size: 13px;
+    }
+
+    #jobForm .form-group:has(#jobDate) {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+}
