@@ -1212,34 +1212,48 @@ textarea {
 @media (max-width: 699px) {
 
     .modal {
+        position: fixed;
+
+        inset: 0;
+
         width: 100%;
         max-width: 100%;
+
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
 
         padding: 0;
     }
 
     .modal-content {
-        width: calc(100% - 20px);
-        max-width: 520px;
-        min-width: 0;
+        position: relative;
 
-        margin: 0 auto;
+        width: 100%;
+        max-width: 520px;
+
+        margin: 0;
 
         padding: 22px 18px 24px;
 
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        box-sizing: border-box;
     }
 
     #jobForm {
         width: 100%;
-        max-width: 100%;
         min-width: 0;
+
+        box-sizing: border-box;
     }
 
     #jobForm .form-group {
         width: 100%;
-        max-width: 100%;
         min-width: 0;
+
+        box-sizing: border-box;
     }
 
     #jobForm input,
@@ -1253,19 +1267,66 @@ textarea {
         box-sizing: border-box;
     }
 
+
+    /* =====================================================
+       DATA
+       ===================================================== */
+
+    .date-group {
+        width: 100%;
+        min-width: 0;
+
+        overflow: hidden;
+    }
+
+    .date-input-wrapper {
+        display: block;
+
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+
+        overflow: hidden;
+
+        box-sizing: border-box;
+    }
+
     .date-input-wrapper input[type="date"] {
+        display: block;
+
         width: 100%;
         max-width: 100%;
         min-width: 0;
 
         height: 48px;
 
-        padding: 0 13px;
+        margin: 0;
+        padding: 0 10px;
+
+        border: 1px solid var(--border);
+        border-radius: var(--radius-small);
+
+        background: var(--surface-soft);
+
+        color: var(--text);
+
+        font-family: inherit;
+        font-size: 15px;
 
         box-sizing: border-box;
+
+        -webkit-appearance: none;
+        appearance: none;
     }
 
+
+    /* =====================================================
+       DESCRIZIONE
+       ===================================================== */
+
     #jobForm textarea {
+        display: block;
+
         width: 100%;
         max-width: 100%;
         min-width: 0;
@@ -1281,6 +1342,7 @@ textarea {
 
         resize: vertical;
     }
+
 }
 
 
@@ -1290,15 +1352,19 @@ textarea {
 
 @media (max-width: 360px) {
 
+    .modal-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
     .date-input-wrapper input[type="date"] {
         width: 100%;
         max-width: 100%;
-        min-width: 0;
-
-        font-size: 13px;
 
         padding-left: 8px;
         padding-right: 8px;
+
+        font-size: 13px;
     }
 
     #jobForm textarea {
@@ -1325,6 +1391,7 @@ textarea {
     .job-details {
         grid-template-columns: 1fr 1fr;
     }
+
 }
 
 
