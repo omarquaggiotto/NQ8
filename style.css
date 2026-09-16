@@ -1172,7 +1172,10 @@ select {
         box-sizing: border-box;
     }
 
-    /* CAMPO DATA */
+
+    /* =====================================================
+       CAMPO DATA
+       ===================================================== */
 
     #jobForm input[type="date"] {
         display: block;
@@ -1187,21 +1190,41 @@ select {
 
         padding: 0 8px;
 
+        margin: 0;
+
         font-size: 15px;
-        line-height: normal;
+        line-height: 48px;
 
-        overflow: hidden;
+        background: var(--surface-soft);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-small);
 
-        -webkit-appearance: none;
-        appearance: none;
+        color: var(--text);
+
+        -webkit-appearance: auto;
+        appearance: auto;
+
+        text-align: center;
     }
+
+
+    /* Rendering interno della data su Chrome/Android */
 
     #jobForm input[type="date"]::-webkit-datetime-edit {
         padding: 0;
         margin: 0;
+
+        line-height: 48px;
     }
 
     #jobForm input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+        padding: 0;
+        margin: 0;
+
+        line-height: 48px;
+    }
+
+    #jobForm input[type="date"]::-webkit-datetime-edit-text {
         padding: 0;
         margin: 0;
     }
@@ -1209,39 +1232,28 @@ select {
     #jobForm input[type="date"]::-webkit-calendar-picker-indicator {
         margin: 0;
         padding: 0;
+
         width: 18px;
         height: 18px;
     }
 }
-    #jobDate {
-    display: block;
-
-    width: 100%;
-    max-width: 100%;
-
-    height: 48px;
-
-    padding: 0 6px;
-
-    box-sizing: border-box;
-
-    font-size: 14px;
-
-    border: 1px solid var(--border);
-    border-radius: var(--radius-small);
-
-    background: var(--surface-soft);
-    color: var(--text);
-}
 
 
-    /* TUTTI GLI ALTRI INPUT */
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
 
-    #jobForm input,
-    #jobForm .money-input {
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
+@media (max-width: 360px) {
+
+    #jobForm input[type="date"] {
+        font-size: 13px;
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    #jobForm textarea {
+        height: 105px;
+        min-height: 105px;
     }
 
 }
@@ -1298,11 +1310,3 @@ select:focus-visible {
     outline-offset: 2px;
 }
 
-@media (max-width: 699px) {
-
-    #jobForm input[type="date"] {
-        vertical-align: middle;
-        text-align: center;
-    }
-
-}
