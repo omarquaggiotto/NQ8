@@ -321,6 +321,27 @@ function showPage(pageName) {
 
 function setupModalEvents() {
 
+    const updateModalViewport = () => {
+        const viewport = window.visualViewport;
+        document.documentElement.style.setProperty("--modal-viewport-height", `${viewport ? viewport.height : window.innerHeight}px`);
+        document.documentElement.style.setProperty("--modal-viewport-top", `${viewport ? viewport.offsetTop : 0}px`);
+    };
+    updateModalViewport();
+    window.addEventListener("resize", updateModalViewport);
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", updateModalViewport);
+        window.visualViewport.addEventListener("scroll", updateModalViewport);
+    }
+    const modalObserver = new MutationObserver(() => {
+        const open = !elements.jobModal.classList.contains("hidden") ||
+            !elements.deleteModal.classList.contains("hidden");
+        document.body.classList.toggle("modal-open", open);
+        if (open) updateModalViewport();
+    });
+    [elements.jobModal, elements.deleteModal].forEach(modal => {
+        modalObserver.observe(modal, {attributes: true, attributeFilter: ["class"]});
+    });
+
     elements.closeJobModal.addEventListener(
         "click",
         closeJobModal

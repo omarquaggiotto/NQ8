@@ -1485,12 +1485,41 @@ textarea:focus-visible {
 }
 
 /* Popup sopra la navigazione, scorrevole anche su schermi bassi. */
+body.modal-open .bottom-navigation { visibility: hidden; pointer-events: none; }
+body.modal-open { overflow: hidden; }
+.modal {
+    top: var(--modal-viewport-top, 0px);
+    bottom: auto;
+    height: var(--modal-viewport-height, 100dvh);
+}
 .modal-content,
 .confirm-content {
     max-height: calc(100vh - 32px);
     max-height: calc(100dvh - 32px - env(safe-area-inset-top));
     overflow-y: auto;
     overscroll-behavior: contain;
+}
+#jobModal .modal-content {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(var(--modal-viewport-height, 100dvh) - 16px - env(safe-area-inset-top));
+    overflow: hidden;
+}
+#jobModal .modal-header { flex-shrink: 0; }
+#jobForm {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1px;
+}
+#jobForm .modal-actions {
+    position: sticky;
+    bottom: -1px;
+    z-index: 1;
+    background: var(--surface);
+    padding-top: 12px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
 }
 @media (max-width: 699px) {
     .modal-content,
