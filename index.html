@@ -69,7 +69,11 @@
                 </div>
                 <div class="filter-field" id="summaryDateField">
                     <label for="summaryDate">Data</label>
-                    <input type="date" id="summaryDate" required>
+                    <div class="summary-date-control">
+                        <span id="summaryDateDisplay" aria-hidden="true">Seleziona data</span>
+                        <span class="summary-date-icon" aria-hidden="true">▾</span>
+                        <input type="date" id="summaryDate" required>
+                    </div>
                 </div>
                 <div class="filter-field" id="summaryMonthField" hidden>
                     <label for="summaryMonth">Mese</label>

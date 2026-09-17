@@ -1483,6 +1483,7 @@ function getSummaryPeriod() {
 
 function updateSummary() {
     if (!elements.summaryPeriod) return;
+    setText("summaryDateDisplay", formatDate(elements.summaryDate.value) || "Seleziona data");
     const mode = elements.summaryPeriod.value;
     elements.summaryDateField.hidden = mode !== "day";
     elements.summaryMonthField.hidden = mode !== "month";
