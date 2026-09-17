@@ -1771,19 +1771,7 @@ async function handleImportFile(event) {
         }
 
 
-        await clearAllJobs();
-
-
-        if (
-            importedJobs.length > 0
-        ) {
-
-            await addMultipleJobs(
-                importedJobs
-            );
-
-        }
-
+        await addMultipleJobs(importedJobs, true);
 
         await refreshJobs();
 

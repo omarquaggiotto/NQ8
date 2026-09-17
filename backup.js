@@ -254,54 +254,33 @@ function importDatabaseBackup(file) {
                        NORMALIZZAZIONE DATI
                     ---------------------------------- */
 
-                    const jobs =
-                        backup.jobs.map(
-                            job => {
-
-                                return {
-
-                                    id:
-                                        Number(
-                                            job.id
-                                        ),
-
-                                    cliente:
-                                        String(
-                                            job.cliente ||
-                                            ""
-                                        ),
-
-                                    data:
-                                        String(
-                                            job.data ||
-                                            ""
-                                        ),
-
-                                    costo:
-                                        Number(
-                                            job.costo
-                                        ) || 0,
-
-                                    ricavo:
-                                        Number(
-                                            job.ricavo
-                                        ) || 0,
-
-                                    creatoIl:
-                                        job.creatoIl ||
-                                        new Date()
-                                            .toISOString(),
-
-                                    modificatoIl:
-                                        job.modificatoIl ||
-                                        new Date()
-                                            .toISOString()
-
-                                };
-
-                            }
-                        );
-
+                    if (backup.version !== undefined && backup.version !== BACKUP_VERSION) {
+                        throw new Error("Versione del backup non supportata.");
+                    }
+                    const ids = new Set();
+                    const jobs = backup.jobs.map((job, index) => {
+                        if (!job || typeof job !== "object") throw new Error("Lavoro non valido.");
+                        const id = Number(job.id);
+                        const cliente = String(job.cliente || "").trim();
+                        const data = String(job.data || "");
+                        const date = new Date(data + "T12:00:00Z");
+                        const costo = Number(job.costo);
+                        const ricavo = Number(job.ricavo);
+                        if (!Number.isSafeInteger(id) || id <= 0 || ids.has(id) || !cliente ||
+                            !/^\d{4}-\d{2}-\d{2}$/.test(data) || Number.isNaN(date.getTime()) ||
+                            date.toISOString().slice(0, 10) !== data ||
+                            job.costo == null || job.ricavo == null ||
+                            !Number.isFinite(costo) || !Number.isFinite(ricavo) || costo < 0 || ricavo < 0) {
+                            throw new Error("Dati non validi nel lavoro " + (index + 1));
+                        }
+                        ids.add(id);
+                        return {
+                            id, cliente, data, costo, ricavo,
+                            descrizione: String(job.descrizione || ""),
+                            creatoIl: job.creatoIl || new Date().toISOString(),
+                            modificatoIl: job.modificatoIl || new Date().toISOString()
+                        };
+                    });
 
                     resolve(
                         jobs

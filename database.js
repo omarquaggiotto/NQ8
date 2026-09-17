@@ -139,12 +139,14 @@ function addJob(job) {
         const request = store.add(job);
 
 
-        request.onsuccess = function () {
+        transaction.oncomplete = function () {
 
             resolve(request.result);
 
         };
 
+
+        transaction.onabort = function () { reject(transaction.error || new Error("Salvataggio annullato.")); };
 
         request.onerror = function (event) {
 
@@ -190,12 +192,14 @@ function updateJob(job) {
         const request = store.put(job);
 
 
-        request.onsuccess = function () {
+        transaction.oncomplete = function () {
 
             resolve(request.result);
 
         };
 
+
+        transaction.onabort = function () { reject(transaction.error || new Error("Salvataggio annullato.")); };
 
         request.onerror = function (event) {
 
@@ -241,12 +245,14 @@ function deleteJob(id) {
         const request = store.delete(id);
 
 
-        request.onsuccess = function () {
+        transaction.oncomplete = function () {
 
             resolve();
 
         };
 
+
+        transaction.onabort = function () { reject(transaction.error || new Error("Salvataggio annullato.")); };
 
         request.onerror = function (event) {
 
@@ -396,12 +402,14 @@ function clearAllJobs() {
         const request = store.clear();
 
 
-        request.onsuccess = function () {
+        transaction.oncomplete = function () {
 
             resolve();
 
         };
 
+
+        transaction.onabort = function () { reject(transaction.error || new Error("Salvataggio annullato.")); };
 
         request.onerror = function (event) {
 
@@ -419,7 +427,7 @@ function clearAllJobs() {
    Utilizzato durante l'importazione del backup
    ========================================================= */
 
-function addMultipleJobs(jobs) {
+function addMultipleJobs(jobs, replaceExisting = false) {
 
     return new Promise((resolve, reject) => {
 
@@ -470,11 +478,14 @@ function addMultipleJobs(jobs) {
         };
 
 
-        jobs.forEach(job => {
-
-            store.add(job);
-
-        });
+        try {
+            // Clear and insert in one transaction: an error rolls back both.
+            if (replaceExisting) store.clear();
+            jobs.forEach(job => store.add(job));
+        } catch (error) {
+            transaction.abort();
+            reject(error);
+        }
 
     });
 

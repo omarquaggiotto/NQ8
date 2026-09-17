@@ -27,7 +27,7 @@ Aggiornato il 17 settembre 2026.
 2. Campo data del riepilogo: contenitore di altezza fissa, testo formattato e input nativo trasparente sovrapposto per mantenere il calendario senza dipendere dalla resa grafica iOS.
 3. Popup sopra la navigazione (`z-index: 10000`, barra 9999), altezza limitata e scorrimento.
 4. Dopo ulteriori segnalazioni nell'app installata su iPhone: altezza e posizione del popup basate su `visualViewport`, barra inferiore nascosta durante i popup, modulo scorrevole e pulsanti sticky. La classe `body.modal-open` segue l'apertura/chiusura dei popup tramite MutationObserver.
-5. Service worker: corretta una virgola mancante nell'elenco dei file; pulizia limitata alle cache NQ8. Cache corrente: `nq8-cache-v6-summary-all`.
+5. Service worker: corretta una virgola mancante nell'elenco dei file; pulizia limitata alle cache NQ8. Cache corrente: `nq8-cache-v7-stable`.
 
 ## Test e limiti
 
@@ -66,3 +66,12 @@ Aggiornato il 17 settembre 2026.
 - Questa app è NQ8, distinta dall'altra app per le multe della squadra.
 
 Questa nota condivide lo stato tecnico attraverso GitHub; non sincronizza automaticamente la conversazione o i dati dei lavori tra dispositivi.
+
+## Chiusura versione personale 1.0
+
+L'utente considera conclusa la versione personale. Eventuale versione commerciale solo in futuro, se ci saranno clienti.
+
+Revisione finale: descrizioni conservate nei backup, validazione di date/importi/ID, ripristino atomico con rollback, scritture confermate al completamento della transazione. Verificati ripristino riuscito e rollback su errore, oltre ai test funzionali e offline già descritti.
+
+Creato un archivio del software precedente alla revisione e uno finale. I backup del software non contengono i lavori reali del telefono. Rimane il limite di verifica su iPhone reale già indicato: non dichiarare risolti definitivamente problemi che il proprietario non ha confermato.
+

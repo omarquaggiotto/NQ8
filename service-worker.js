@@ -1,4 +1,4 @@
-const CACHE_NAME = "nq8-cache-v6-summary-all";
+const CACHE_NAME = "nq8-cache-v7-stable";
 
 const APP_FILES = [
     "./",
