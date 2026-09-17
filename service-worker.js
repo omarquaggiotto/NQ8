@@ -1,4 +1,4 @@
-const CACHE_NAME = "nq8-cache-v1";
+const CACHE_NAME = "nq8-cache-v2-summary";
 
 const APP_FILES = [
     "./",
@@ -7,7 +7,7 @@ const APP_FILES = [
     "./database.js",
     "./app.js",
     "./backup.js",
-    "./manifest.json"
+    "./manifest.json",
     "./assets/icon-512.png"
 ];
 
@@ -26,7 +26,7 @@ self.addEventListener("activate", (event) => {
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames
-                    .filter((cacheName) => cacheName !== CACHE_NAME)
+                    .filter((cacheName) => cacheName.startsWith("nq8-cache-") && cacheName !== CACHE_NAME)
                     .map((cacheName) => caches.delete(cacheName))
             );
         }).then(() => self.clients.claim())

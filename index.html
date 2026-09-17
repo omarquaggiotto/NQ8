@@ -58,178 +58,40 @@
             </div>
 
 
-            <!-- RIEPILOGO GIORNALIERO -->
-            <div class="summary-section">
-
-                <div class="section-header">
-                    <h2>Oggi</h2>
-                    <span id="todayDate"></span>
+            <div class="filters-card summary-controls">
+                <div class="filter-field">
+                    <label for="summaryPeriod">Periodo</label>
+                    <select id="summaryPeriod">
+                        <option value="day">Giorno</option>
+                        <option value="month">Mese</option>
+                        <option value="year">Anno</option>
+                    </select>
                 </div>
-
-                <div class="summary-grid">
-
-                    <div class="summary-card">
-                        <span class="summary-label">
-                            Lavori
-                        </span>
-
-                        <strong id="todayJobs">
-                            0
-                        </strong>
-                    </div>
-
-
-                    <div class="summary-card">
-                        <span class="summary-label">
-                            Costi
-                        </span>
-
-                        <strong id="todayCosts">
-                            € 0,00
-                        </strong>
-                    </div>
-
-
-                    <div class="summary-card">
-                        <span class="summary-label">
-                            Ricavi
-                        </span>
-
-                        <strong id="todayRevenue">
-                            € 0,00
-                        </strong>
-                    </div>
-
-
-                    <div class="summary-card highlight">
-                        <span class="summary-label">
-                            Guadagno
-                        </span>
-
-                        <strong id="todayProfit">
-                            € 0,00
-                        </strong>
-                    </div>
-
+                <div class="filter-field" id="summaryDateField">
+                    <label for="summaryDate">Data</label>
+                    <input type="date" id="summaryDate" required>
                 </div>
-
+                <div class="filter-field" id="summaryMonthField" hidden>
+                    <label for="summaryMonth">Mese</label>
+                    <select id="summaryMonth"></select>
+                </div>
+                <div class="filter-field" id="summaryYearField" hidden>
+                    <label for="summaryYear">Anno</label>
+                    <input type="number" id="summaryYear" min="1" max="9999" step="1" inputmode="numeric" required>
+                </div>
             </div>
-
-
-            <!-- RIEPILOGO MENSILE -->
-            <div class="summary-section">
-
-                <div class="section-header">
-                    <h2>Questo mese</h2>
-                    <span id="currentMonth"></span>
-                </div>
-
+            <div class="summary-section" aria-live="polite" aria-atomic="true">
+                <div class="section-header"><h2 id="summaryHeading">Periodo selezionato</h2></div>
                 <div class="summary-grid">
-
-                    <div class="summary-card">
-                        <span class="summary-label">
-                            Lavori
-                        </span>
-
-                        <strong id="monthJobs">
-                            0
-                        </strong>
-                    </div>
-
-
-                    <div class="summary-card">
-                        <span class="summary-label">
-                            Costi
-                        </span>
-
-                        <strong id="monthCosts">
-                            € 0,00
-                        </strong>
-                    </div>
-
-
-                    <div class="summary-card">
-                        <span class="summary-label">
-                            Ricavi
-                        </span>
-
-                        <strong id="monthRevenue">
-                            € 0,00
-                        </strong>
-                    </div>
-
-
-                    <div class="summary-card highlight">
-                        <span class="summary-label">
-                            Guadagno
-                        </span>
-
-                        <strong id="monthProfit">
-                            € 0,00
-                        </strong>
-                    </div>
-
+                    <div class="summary-card"><span class="summary-label">Lavori</span><strong id="summaryJobs">0</strong></div>
+                    <div class="summary-card"><span class="summary-label">Costi</span><strong id="summaryCosts">€ 0,00</strong></div>
+                    <div class="summary-card"><span class="summary-label">Ricavi</span><strong id="summaryRevenue">€ 0,00</strong></div>
+                    <div class="summary-card highlight"><span class="summary-label">Guadagno</span><strong id="summaryProfit">€ 0,00</strong></div>
                 </div>
-
+                <p id="summaryEmpty" class="summary-message" hidden>Nessun lavoro nel periodo selezionato.</p>
+                <p id="summaryError" class="summary-message" hidden>Seleziona un periodo valido.</p>
             </div>
-
-
-            <!-- RIEPILOGO ANNUALE -->
-            <div class="summary-section">
-
-                <div class="section-header">
-                    <h2>Quest'anno</h2>
-                    <span id="currentYear"></span>
-                </div>
-
-                <div class="summary-grid">
-
-                    <div class="summary-card">
-                        <span class="summary-label">
-                            Lavori
-                        </span>
-
-                        <strong id="yearJobs">
-                            0
-                        </strong>
-                    </div>
-
-
-                    <div class="summary-card">
-                        <span class="summary-label">
-                            Costi
-                        </span>
-
-                        <strong id="yearCosts">
-                            € 0,00
-                        </strong>
-                    </div>
-
-
-                    <div class="summary-card">
-                        <span class="summary-label">
-                            Ricavi
-                        </span>
-
-                        <strong id="yearRevenue">
-                            € 0,00
-                        </strong>
-                    </div>
-
-
-                    <div class="summary-card highlight">
-                        <span class="summary-label">
-                            Guadagno
-                        </span>
-
-                        <strong id="yearProfit">
-                            € 0,00
-                        </strong>
-                    </div>
-
-                </div>
-
-            </div>
+            <button id="viewSummaryJobs" class="primary-button summary-link" type="button">Vedi lavori del giorno</button>
 
         </section>
 

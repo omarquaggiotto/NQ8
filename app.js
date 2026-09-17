@@ -49,6 +49,8 @@ async function initializeApp() {
 
     setupFilters();
 
+    setupSummary();
+
     setupSettings();
 
     setDefaultDate();
@@ -59,7 +61,7 @@ async function initializeApp() {
 
     updateSummary();
 
-    updateDateLabels();
+    updateMonthOptions();
 
 }
 
@@ -1259,13 +1261,13 @@ function updateFilterOptions() {
     const years =
         [
             ...new Set(
-                state.jobs.map(
+                [currentYear, ...state.jobs.map(
                     job =>
                         job.data.substring(
                             0,
                             4
                         )
-                )
+                )].filter(Boolean)
             )
         ]
         .sort(
@@ -1368,6 +1370,11 @@ function updateDayFilter() {
     });
 
 
+    const maxDay = selectedMonth
+        ? new Date(Number(selectedYear) || 2000, Number(selectedMonth), 0).getDate()
+        : 31;
+    if (currentDay && Number(currentDay) <= maxDay) days.push(currentDay);
+
     days =
         [
             ...new Set(days)
@@ -1413,169 +1420,105 @@ function updateDayFilter() {
    RIEPILOGO
    ========================================================= */
 
+function setupSummary() {
+    ["summaryPeriod", "summaryDate", "summaryMonth", "summaryYear",
+     "summaryDateField", "summaryMonthField", "summaryYearField",
+     "viewSummaryJobs", "summaryEmpty", "summaryError"].forEach(id => {
+        elements[id] = document.getElementById(id);
+    });
+    const today = getLocalDateString();
+    elements.summaryDate.value = today;
+    elements.summaryYear.value = today.slice(0, 4);
+    for (let month = 1; month <= 12; month++) {
+        const label = new Intl.DateTimeFormat("it-IT", {month: "long"})
+            .format(new Date(2000, month - 1, 1));
+        elements.summaryMonth.add(new Option(label, String(month).padStart(2, "0")));
+    }
+    elements.summaryMonth.value = today.slice(5, 7);
+    elements.summaryPeriod.addEventListener("change", updateSummary);
+    elements.summaryDate.addEventListener("change", () => {
+        if (elements.summaryDate.value && elements.summaryDate.validity.valid) {
+            elements.summaryYear.value = elements.summaryDate.value.slice(0, 4);
+            elements.summaryMonth.value = elements.summaryDate.value.slice(5, 7);
+        }
+        updateSummary();
+    });
+    const syncDate = () => {
+        const year = Number(elements.summaryYear.value);
+        const month = Number(elements.summaryMonth.value);
+        if (elements.summaryYear.validity.valid && year >= 1 && year <= 9999) {
+            const date = new Date(2000, month, 0);
+            date.setFullYear(year);
+            // Recompute month end after setting the year (including leap years).
+            date.setMonth(month, 0);
+            const day = Math.min(Number(elements.summaryDate.value.slice(8, 10)) || 1, date.getDate());
+            elements.summaryDate.value = `${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        }
+        updateSummary();
+    };
+    elements.summaryMonth.addEventListener("change", syncDate);
+    elements.summaryYear.addEventListener("input", syncDate);
+    elements.viewSummaryJobs.addEventListener("click", openSummaryJobs);
+}
+
+function getSummaryPeriod() {
+    const mode = elements.summaryPeriod.value;
+    if (mode === "day") {
+        const date = elements.summaryDate.value;
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !elements.summaryDate.validity.valid) return null;
+        const [year, month, day] = date.split("-");
+        return {year, month, day, prefix: date, label: formatDate(date)};
+    }
+    const input = elements.summaryYear;
+    const number = Number(input.value);
+    if (!input.value || !input.validity.valid || !Number.isInteger(number) || number < 1 || number > 9999) return null;
+    const year = String(number).padStart(4, "0");
+    if (mode === "month") {
+        const month = elements.summaryMonth.value;
+        const label = elements.summaryMonth.selectedOptions[0].textContent;
+        return {year, month, day: "", prefix: `${year}-${month}-`, label: `${label} ${year}`};
+    }
+    return {year, month: "", day: "", prefix: `${year}-`, label: year};
+}
+
 function updateSummary() {
+    if (!elements.summaryPeriod) return;
+    const mode = elements.summaryPeriod.value;
+    elements.summaryDateField.hidden = mode !== "day";
+    elements.summaryMonthField.hidden = mode !== "month";
+    elements.summaryYearField.hidden = mode === "day";
+    const period = getSummaryPeriod();
+    const jobs = period ? state.jobs.filter(job => job.data.startsWith(period.prefix)) : [];
+    const totals = calculateSummary(jobs);
+    setText("summaryHeading", period ? period.label : "Periodo non valido");
+    setText("summaryJobs", period ? totals.jobs : "—");
+    for (const [id, key] of [["summaryCosts", "costs"], ["summaryRevenue", "revenue"], ["summaryProfit", "profit"]]) {
+        setText(id, period ? formatCurrency(totals[key]) : "—");
+    }
+    elements.summaryEmpty.hidden = !period || jobs.length > 0;
+    elements.summaryError.hidden = Boolean(period);
+    elements.viewSummaryJobs.disabled = !period;
+    setText("viewSummaryJobs", {day: "Vedi lavori del giorno", month: "Vedi lavori del mese", year: "Vedi lavori dell’anno"}[mode]);
+}
 
-    const now =
-        new Date();
+function selectFilterValue(select, value) {
+    if (value && !Array.from(select.options).some(option => option.value === value)) {
+        select.add(new Option(String(Number(value)), value));
+    }
+    select.value = value;
+}
 
-
-    const today =
-        getLocalDateString(now);
-
-
-    const year =
-        String(
-            now.getFullYear()
-        );
-
-
-    const month =
-        String(
-            now.getMonth() + 1
-        )
-        .padStart(2, "0");
-
-
-    const monthPrefix =
-        `${year}-${month}`;
-
-
-    const yearPrefix =
-        `${year}-`;
-
-
-    const todayJobs =
-        state.jobs.filter(
-            job =>
-                job.data === today
-        );
-
-
-    const monthJobs =
-        state.jobs.filter(
-            job =>
-                job.data.startsWith(
-                    monthPrefix
-                )
-        );
-
-
-    const yearJobs =
-        state.jobs.filter(
-            job =>
-                job.data.startsWith(
-                    yearPrefix
-                )
-        );
-
-
-    const todaySummary =
-        calculateSummary(
-            todayJobs
-        );
-
-
-    const monthSummary =
-        calculateSummary(
-            monthJobs
-        );
-
-
-    const yearSummary =
-        calculateSummary(
-            yearJobs
-        );
-
-
-    setText(
-        "todayJobs",
-        todaySummary.jobs
-    );
-
-
-    setText(
-        "todayCosts",
-        formatCurrency(
-            todaySummary.costs
-        )
-    );
-
-
-    setText(
-        "todayRevenue",
-        formatCurrency(
-            todaySummary.revenue
-        )
-    );
-
-
-    setText(
-        "todayProfit",
-        formatCurrency(
-            todaySummary.profit
-        )
-    );
-
-
-    setText(
-        "monthJobs",
-        monthSummary.jobs
-    );
-
-
-    setText(
-        "monthCosts",
-        formatCurrency(
-            monthSummary.costs
-        )
-    );
-
-
-    setText(
-        "monthRevenue",
-        formatCurrency(
-            monthSummary.revenue
-        )
-    );
-
-
-    setText(
-        "monthProfit",
-        formatCurrency(
-            monthSummary.profit
-        )
-    );
-
-
-    setText(
-        "yearJobs",
-        yearSummary.jobs
-    );
-
-
-    setText(
-        "yearCosts",
-        formatCurrency(
-            yearSummary.costs
-        )
-    );
-
-
-    setText(
-        "yearRevenue",
-        formatCurrency(
-            yearSummary.revenue
-        )
-    );
-
-
-    setText(
-        "yearProfit",
-        formatCurrency(
-            yearSummary.profit
-        )
-    );
-
+function openSummaryJobs() {
+    const period = getSummaryPeriod();
+    if (!period) return;
+    selectFilterValue(elements.filterYear, period.year);
+    elements.filterMonth.value = period.month;
+    elements.filterDay.value = "";
+    updateDayFilter();
+    selectFilterValue(elements.filterDay, period.day);
+    elements.filterClient.value = "";
+    showPage("jobs");
+    window.scrollTo(0, 0);
 }
 
 
@@ -1616,43 +1559,6 @@ function calculateSummary(jobs) {
 /* =========================================================
    DATE LABELS
    ========================================================= */
-
-function updateDateLabels() {
-
-    const now =
-        new Date();
-
-
-    setText(
-        "todayDate",
-        formatDate(
-            getLocalDateString(now)
-        )
-    );
-
-
-    setText(
-        "currentMonth",
-        new Intl.DateTimeFormat(
-            "it-IT",
-            {
-                month: "long",
-                year: "numeric"
-            }
-        ).format(now)
-    );
-
-
-    setText(
-        "currentYear",
-        now.getFullYear()
-    );
-
-
-    updateMonthOptions();
-
-}
-
 
 function updateMonthOptions() {
 
