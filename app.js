@@ -1478,12 +1478,13 @@ function setupSummary() {
         updateSummary();
     };
     elements.summaryMonth.addEventListener("change", syncDate);
-    elements.summaryYear.addEventListener("input", syncDate);
+    elements.summaryYear.addEventListener("change", syncDate);
     elements.viewSummaryJobs.addEventListener("click", openSummaryJobs);
 }
 
 function getSummaryPeriod() {
     const mode = elements.summaryPeriod.value;
+    if (mode === "all") return {year: "", month: "", day: "", prefix: "", label: "Sempre"};
     if (mode === "day") {
         const date = elements.summaryDate.value;
         if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !elements.summaryDate.validity.valid) return null;
@@ -1504,23 +1505,41 @@ function getSummaryPeriod() {
 
 function updateSummary() {
     if (!elements.summaryPeriod) return;
+    updateSummaryYears();
     setText("summaryDateDisplay", formatDate(elements.summaryDate.value) || "Seleziona data");
     const mode = elements.summaryPeriod.value;
     elements.summaryDateField.hidden = mode !== "day";
     elements.summaryMonthField.hidden = mode !== "month";
-    elements.summaryYearField.hidden = mode === "day";
+    elements.summaryYearField.hidden = mode === "day" || mode === "all";
     const period = getSummaryPeriod();
     const jobs = period ? state.jobs.filter(job => job.data.startsWith(period.prefix)) : [];
     const totals = calculateSummary(jobs);
-    setText("summaryHeading", period ? period.label : "Periodo non valido");
-    setText("summaryJobs", period ? totals.jobs : "—");
+    const noYears = elements.summaryYear.disabled && (mode === "month" || mode === "year");
+    setText("summaryHeading", period ? period.label : noYears ? "Nessun lavoro registrato" : "Periodo non valido");
+    setText("summaryJobs", period || noYears ? totals.jobs : "—");
     for (const [id, key] of [["summaryCosts", "costs"], ["summaryRevenue", "revenue"], ["summaryProfit", "profit"]]) {
-        setText(id, period ? formatCurrency(totals[key]) : "—");
+        setText(id, period || noYears ? formatCurrency(totals[key]) : "—");
     }
     elements.summaryEmpty.hidden = !period || jobs.length > 0;
-    elements.summaryError.hidden = Boolean(period);
+    elements.summaryError.hidden = Boolean(period) || noYears;
     elements.viewSummaryJobs.disabled = !period;
-    setText("viewSummaryJobs", {day: "Vedi lavori del giorno", month: "Vedi lavori del mese", year: "Vedi lavori dell’anno"}[mode]);
+    setText("viewSummaryJobs", {day: "Vedi lavori del giorno", month: "Vedi lavori del mese", year: "Vedi lavori dell’anno", all: "Vedi tutti i lavori"}[mode]);
+}
+
+function updateSummaryYears() {
+    const select = elements.summaryYear;
+    const previous = select.value;
+    const years = [...new Set(state.jobs.map(job => job.data.slice(0, 4)))].sort((a, b) => Number(b) - Number(a));
+    const available = Array.from(select.options).map(option => option.value);
+    if (available.join(",") !== years.join(",") || select.disabled !== (years.length === 0)) {
+        select.replaceChildren();
+        years.forEach(year => select.add(new Option(year, year)));
+        if (!years.length) select.add(new Option("Nessun anno disponibile", ""));
+    }
+    select.disabled = years.length === 0;
+    const dateYear = elements.summaryDate.value.slice(0, 4);
+    const currentYear = getLocalDateString().slice(0, 4);
+    select.value = [previous, dateYear, currentYear, years[0]].find(year => years.includes(year)) || "";
 }
 
 function selectFilterValue(select, value) {

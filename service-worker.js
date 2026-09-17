@@ -1,4 +1,4 @@
-const CACHE_NAME = "nq8-cache-v5-ios-modal";
+const CACHE_NAME = "nq8-cache-v6-summary-all";
 
 const APP_FILES = [
     "./",
