@@ -1536,3 +1536,29 @@ body.modal-open { overflow: hidden; }
         padding-bottom: calc(24px + env(safe-area-inset-bottom));
     }
 }
+
+/* Da incassare: layout dedicato allo stile chiaro di NQ8. */
+.payments-summary { margin-top:28px; padding:20px; border:1px solid var(--border); border-radius:20px; background:var(--surface); box-shadow:var(--shadow); }
+.payments-heading { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px; }
+.payments-heading h2 { margin:0; font-size:22px; }
+.unpaid-count { padding:5px 10px; border-radius:20px; background:#eef2f6; color:var(--primary); font-size:12px; font-weight:700; }
+.unpaid-count[hidden],.payments-total[hidden] { display:none; }
+.payments-summary .payments-total { display:flex; flex-direction:row; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 16px; padding:18px 0; margin-top:4px; border:0; border-bottom:1px solid var(--border); border-radius:0; background:none; box-shadow:none; text-align:left; }
+.payments-summary .payments-total strong { margin:0; font-size:30px; color:var(--primary); overflow-wrap:anywhere; }
+.payments-summary .summary-label { font-size:13px; }
+.payments-summary .unpaid-list { margin-top:14px; gap:12px; }
+.unpaid-item { border:1px solid var(--border); border-radius:14px; background:var(--surface-soft); overflow:hidden; }
+.payments-summary .unpaid-job { border:0; border-radius:0; padding:15px 14px 12px; background:none; gap:7px; }
+.unpaid-job-heading { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:4px 12px; }
+.unpaid-job-heading strong { font-size:16px; }
+.unpaid-job-amount { margin-left:auto; color:var(--primary); }
+.unpaid-job-detail,.payments-summary .unpaid-job-date { color:var(--text-secondary); }
+.payments-summary .unpaid-job-date { font-size:12px; }
+.unpaid-pay-button { display:flex; align-items:center; justify-content:center; gap:8px; width:calc(100% - 28px); min-height:44px; margin:0 14px 14px; border:1px solid #bedfc9; border-radius:10px; background:var(--success-soft); color:var(--success); font:inherit; font-size:14px; font-weight:700; cursor:pointer; }
+.unpaid-pay-button:hover { background:#dcefe3; }
+.unpaid-pay-button:disabled { opacity:.55; cursor:wait; }
+.unpaid-job:focus-visible,.unpaid-pay-button:focus-visible { outline:2px solid var(--primary); outline-offset:-3px; }
+.unpaid-empty { display:flex; align-items:center; gap:12px; padding:8px 0 2px; color:var(--text-secondary); }
+.unpaid-empty>span { display:grid; place-items:center; width:32px; height:32px; flex-shrink:0; border-radius:50%; background:var(--success-soft); color:var(--success); }
+.unpaid-empty p { margin:0; font-size:14px; }
+@media(max-width:380px) { .payments-summary { padding:15px; } .payments-summary .payments-total strong { font-size:26px; } }

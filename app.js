@@ -76,16 +76,31 @@ function renderPaymentSummary() {
     if (!list) return;
     const totals = paymentTotals(state.jobs);
     setText("paymentRemaining", formatCurrency(totals.remaining / 100));
-    setText("paymentReceived", formatCurrency(totals.received / 100));
     const unpaid = state.jobs.filter(job => paymentAmounts(job).remaining > 0);
-    list.innerHTML = unpaid.length ? unpaid.map(job => `
-        <button type="button" class="unpaid-job" data-open-job="${job.id}">
-            <strong>${escapeHtml(job.cliente)}</strong>
-            <span>${escapeHtml(job.descrizione || "Lavoro")} · ${formatDate(job.data)}</span>
-            <span>${escapeHtml(paymentCardText(job))}</span>
-        </button>`).join("") : '<p class="payment-info">Nessun lavoro da incassare.</p>';
+    document.getElementById("paymentTotalCard").hidden = unpaid.length === 0;
+    const count = document.getElementById('unpaidCount');
+    count.textContent = `${unpaid.length} ${unpaid.length === 1 ? 'lavoro' : 'lavori'}`;
+    count.hidden = unpaid.length === 0;
+    list.innerHTML = unpaid.length ? unpaid.slice(0, state.paymentLimit || 50).map(job => `
+        <article class="unpaid-item">
+            <button type="button" class="unpaid-job" data-open-job="${job.id}">
+                <span class="unpaid-job-heading"><strong>${escapeHtml(job.cliente)}</strong><strong class="unpaid-job-amount">${formatCurrency(paymentAmounts(job).remaining)}</strong></span>
+                <span class="unpaid-job-detail">${escapeHtml(job.descrizione || "Lavoro")}</span>
+                <span class="unpaid-job-date">${formatDate(job.data)}${paymentRecord(job).stato === 'partial' ? ' · Acconto ricevuto' : ''}</span>
+            </button>
+            <button type="button" class="unpaid-pay-button" data-receivable-paid="${job.id}" aria-label="Segna come pagato: ${escapeHtml(job.cliente)} — ${escapeHtml(job.descrizione || 'Lavoro')}"><span aria-hidden="true">✓</span> Segna come pagato</button>
+        </article>`).join("") : '<div class="unpaid-empty"><span aria-hidden="true">✓</span><p>Nessun pagamento in sospeso.</p></div>';
+    if (unpaid.length > (state.paymentLimit || 50)) {
+        const more = document.createElement('button');
+        more.type = 'button'; more.className = 'secondary-button'; more.textContent = 'Mostra altri lavori da incassare';
+        more.onclick = () => { state.paymentLimit = (state.paymentLimit || 50) + 50; renderPaymentSummary(); };
+        list.append(more);
+    }
     list.querySelectorAll("[data-open-job]").forEach(button => {
         button.addEventListener("click", () => openEditJobModal(Number(button.dataset.openJob)));
+    });
+    list.querySelectorAll('[data-receivable-paid]').forEach(button => {
+        button.addEventListener('click', () => markJobPaid(Number(button.dataset.receivablePaid), button));
     });
 }
 
