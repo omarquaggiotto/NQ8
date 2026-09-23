@@ -1,8 +1,8 @@
 # NQ8
 
-Versione personale 1.1 — gestione pagamenti, 23 settembre 2026. Testata localmente; rilascio su GitHub Pages autorizzato da Omar.
+Versione personale 1.2 — Da incassare e saldo rapido, 23 settembre 2026. Rilascio su GitHub Pages autorizzato da Omar.
 
-Da pagare, Acconto ricevuto e Pagato nel form e nelle schede; saldo rapido e riepilogo Da incassare / Incassato su tutto l’archivio. Ricavi, Costi e Guadagno mantengono il significato precedente. Per scelta del proprietario, i lavori precedenti (anche da backup v1) sono considerati pagati, senza inventare date di saldo.
+Da pagare, Acconto ricevuto e Pagato nel form e nelle schede. Da incassare mostra solo totale residuo e lavori ancora da saldare, con cliente, importo e comando Segna come pagato. Lista a blocchi di 50, stile chiaro NQ8; eliminati il riquadro Incassato e i testi superflui. Ricavi, Costi e Guadagno mantengono il significato precedente. Per scelta del proprietario, i lavori precedenti (anche da backup v1) sono considerati pagati, senza inventare date di saldo.
 
 Backup v2 con pagamenti e lettura dei backup v1; ripristino sempre sostitutivo e atomico, preceduto dal download di un backup di sicurezza. Nessun merge. Dettagli e verifiche in [REPORT-PAGAMENTI.md](REPORT-PAGAMENTI.md).
 

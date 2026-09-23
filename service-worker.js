@@ -1,4 +1,4 @@
-const CACHE_NAME = "nq8-cache-v8-payments";
+const CACHE_NAME = "nq8-cache-v9-receivables";
 
 const APP_FILES = [
     "./",

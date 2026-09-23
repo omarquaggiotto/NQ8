@@ -2,6 +2,10 @@
 
 Aggiornato il 23 settembre 2026.
 
+## Versione 1.2 — Da incassare
+
+Sezione compatta nello stile chiaro NQ8: totale residuo, numero lavori e schede con saldo rapido. Nessun riquadro Incassato o testo storico nel riepilogo. Lista progressiva di 50 lavori. Riutilizzati calcoli e salvataggio NQ8: DB1 e backup2 invariati. Cache `nq8-cache-v9-receivables`. Test di regressione includono saldo dalla nuova sezione, persistenza, backup e aggiornamento PWA dalla 1.1.
+
 ## Stato corrente: versione personale 1.1
 
 Gestione pagamenti implementata e testata su base `e4a0762`. Il 23 settembre 2026 Omar ha autorizzato la pubblicazione della 1.1. GitHub Pages pubblica automaticamente `main`.

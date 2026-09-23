@@ -74,7 +74,9 @@ async function main() {
  await test('UI creates unpaid and partial; summary links open work; overpayment blocks save',async()=>{
   await create('Da pagare','unpaid');await create('Acconto','partial',200);
   assert.match(await page.locator('#paymentRemaining').innerText(),/800/);
-  assert.match(await page.locator('#paymentReceived').innerText(),/200/);
+  assert.equal(await page.locator('#paymentReceived').count(),0);
+  assert.equal(await page.evaluate(()=>paymentTotals(state.jobs).received),20000);
+  assert.equal(await page.locator('#unpaidCount').innerText(),'2 lavori');
   assert.equal(await page.locator('.unpaid-job').count(),2);
   await page.locator('.unpaid-job').filter({hasText:'Acconto'}).click();
   await page.locator('#jobRevenue').fill('150');
@@ -85,7 +87,8 @@ async function main() {
   await page.locator('#jobForm button[type=submit]').click();await page.waitForFunction(()=>state.jobs.some(j=>j.cliente==='Acconto' && j.ricavo===600));
  });
  await test('quick balance removes insolvent; direct paid never insolvent; full deposit UX',async()=>{
-  await page.locator('.job-card').filter({hasText:'Acconto'}).locator('.paid-job-button').click();
+  await page.locator('[data-page=summary]').click();
+  await page.locator('.unpaid-item').filter({hasText:'Acconto'}).locator('[data-receivable-paid]').click();
   await page.waitForFunction(()=>state.jobs.find(j=>j.cliente==='Acconto').pagamento.stato==='paid');
   assert.equal(await page.locator('.unpaid-job').count(),1);
   await create('Subito pagato','paid');await create('Acconto completo','partial',500);
@@ -184,6 +187,7 @@ async function main() {
   await page.locator('#summaryPeriod').selectOption('all');assert.equal(await page.locator('#summaryJobs').innerText(),'0');
   assert.equal(await page.locator('#summaryYear').isDisabled(),true);
   assert.equal(await page.locator('.unpaid-job').count(),0);
+  assert.equal(await page.locator('#paymentTotalCard').isVisible(),false);
   await page.evaluate(async jobs=>{await addMultipleJobs(jobs,true);await refreshJobs();},saved);
  });
  await test('PWA cached payments module and offline reload retains payment state',async()=>{
@@ -195,10 +199,10 @@ async function main() {
  });
  assert.deepEqual(errors,[]);
  await context.close();
- if(process.argv.includes('--upgrade')) await test('real upgrade from release 1.0 / SW v7 / DB v1, data intact online and offline', async()=>{
+ if(process.argv.includes('--upgrade')) await test('real PWA upgrade / DB v1, data intact online and offline', async()=>{
   baseline={};
   for(const file of ['app.js','database.js','backup.js','index.html','style.css','service-worker.js']) {
-   baseline[file]=execFileSync('git',['-c','safe.directory='+root.replaceAll('\\','/'),'-C',root,'show','e4a0762:'+file]);
+   baseline[file]=process.env.NQ8_BASELINE_DIR ? fs.readFileSync(path.join(process.env.NQ8_BASELINE_DIR,file)) : execFileSync('git',['-c','safe.directory='+root.replaceAll('\\','/'),'-C',root,'show','e4a0762:'+file]);
   }
   const oldContext=await browser.newContext();const oldPage=await oldContext.newPage();
   await oldPage.goto(url);await oldPage.waitForFunction(()=>typeof db!=='undefined' && !!db);
@@ -216,9 +220,11 @@ async function main() {
   await oldPage.reload();await oldPage.waitForFunction(()=>typeof paymentAmounts==='function' && state.jobs.length===1);
   assert.deepEqual(await oldPage.evaluate(()=>getAllJobs()),oldRecords);
   assert.equal(await oldPage.evaluate(()=>db.version),1);
-  assert.match(await oldPage.locator('#paymentReceived').innerText(),/500/);
+  assert.equal(await oldPage.evaluate(()=>paymentTotals(state.jobs).received),50000);
+  assert.equal(await oldPage.locator('#paymentTotalCard').isVisible(),false);
   assert.equal(await oldPage.locator('.unpaid-job').count(),0);
   assert.equal(await oldPage.evaluate(async()=>(await caches.keys()).includes('nq8-cache-v7-stable')),false);
+  assert.equal(await oldPage.evaluate(async()=>(await caches.keys()).includes('nq8-cache-v8-payments')),false);
   await oldContext.setOffline(true);await oldPage.reload();await oldPage.waitForFunction(()=>state.jobs.length===1);
   assert.deepEqual(await oldPage.evaluate(()=>getAllJobs()),oldRecords);
   await oldContext.close();

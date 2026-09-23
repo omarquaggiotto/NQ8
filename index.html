@@ -99,13 +99,8 @@
             <button id="viewSummaryJobs" class="primary-button summary-link" type="button">Vedi lavori del giorno</button>
 
             <section class="summary-section payments-summary" aria-labelledby="paymentsHeading">
-                <h2 id="paymentsHeading">Da incassare</h2>
-                <p class="payment-info">Tutto l’archivio · importi aggiornati, indipendenti dal periodo selezionato.</p>
-                <div class="summary-grid">
-                    <div class="summary-card"><span class="summary-label">Da incassare</span><strong id="paymentRemaining">€ 0,00</strong></div>
-                    <div class="summary-card"><span class="summary-label">Incassato</span><strong id="paymentReceived">€ 0,00</strong></div>
-                </div>
-                <p class="payment-info">I lavori precedenti alla gestione pagamenti sono considerati pagati; la data del saldo non è disponibile.</p>
+                <div class="payments-heading"><h2 id="paymentsHeading">Da incassare</h2><span id="unpaidCount" class="unpaid-count" hidden></span></div>
+                <div class="summary-card payments-total" id="paymentTotalCard" hidden><span class="summary-label">Totale da ricevere</span><strong id="paymentRemaining">€ 0,00</strong></div>
                 <div id="unpaidJobs" class="unpaid-list"></div>
             </section>
         </section>
@@ -302,7 +297,7 @@
                     </span>
 
                     <small>
-                        Gestione lavori · Versione 1.1
+                        Gestione lavori · Versione 1.2
                     </small>
 
                 </div>
