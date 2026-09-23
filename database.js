@@ -111,6 +111,7 @@ function openDatabase() {
    ========================================================= */
 
 function addJob(job) {
+    try { validatePayment(job); } catch (error) { return Promise.reject(error); }
 
     return new Promise((resolve, reject) => {
 
@@ -164,6 +165,7 @@ function addJob(job) {
    ========================================================= */
 
 function updateJob(job) {
+    try { validatePayment(job); } catch (error) { return Promise.reject(error); }
 
     return new Promise((resolve, reject) => {
 
@@ -481,7 +483,7 @@ function addMultipleJobs(jobs, replaceExisting = false) {
         try {
             // Clear and insert in one transaction: an error rolls back both.
             if (replaceExisting) store.clear();
-            jobs.forEach(job => store.add(job));
+            jobs.forEach(job => { validatePayment(job); store.add(job); });
         } catch (error) {
             transaction.abort();
             reject(error);

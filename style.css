@@ -832,7 +832,8 @@ textarea {
     font-weight: 650;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
     display: block;
 
     width: 100%;
@@ -855,7 +856,8 @@ textarea {
     font-size: 15px;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus {
     border-color: var(--primary);
 }
 
@@ -1485,6 +1487,13 @@ textarea:focus-visible {
 }
 
 /* Popup sopra la navigazione, scorrevole anche su schermi bassi. */
+.payment-info { font-size: 14px; line-height: 1.5; margin: 12px 0; overflow-wrap: anywhere; }
+.payments-summary { margin-top: 28px; }
+.unpaid-list { display: grid; gap: 8px; margin-top: 16px; }
+.unpaid-job { display: grid; gap: 4px; width: 100%; text-align: left; padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); color: inherit; font: inherit; cursor: pointer; overflow-wrap: anywhere; }
+.unpaid-job span { font-size: 14px; }
+.job-actions { flex-wrap: wrap; }
+#depositField[hidden] { display: none; }
 body.modal-open .bottom-navigation { visibility: hidden; pointer-events: none; }
 body.modal-open { overflow: hidden; }
 .modal {

@@ -26,6 +26,69 @@ const state = {
 
 const elements = {};
 
+function updatePaymentPreview() {
+    const partial = elements.paymentStatus.value === "partial";
+    elements.depositField.hidden = !partial;
+    elements.paymentDeposit.disabled = !partial;
+    elements.paymentDeposit.required = partial;
+    const total = Number(elements.jobRevenue.value);
+    const deposit = Number(elements.paymentDeposit.value);
+    elements.paymentDeposit.max = String(total);
+    elements.paymentDeposit.setCustomValidity(partial && (deposit < 0 || deposit > total) ?
+        "L’acconto deve essere compreso tra zero e il totale lavoro." : "");
+    try {
+        const previous = state.jobs.find(job => job.id === state.editingJobId);
+        const pagamento = buildPayment(previous, total, elements.paymentStatus.value, deposit);
+        const amounts = paymentAmounts({ricavo: total, pagamento});
+        elements.paymentPreview.textContent = `Totale lavoro: ${formatCurrency(total)} · Residuo: ${formatCurrency(amounts.remaining)}` +
+            (partial && pagamento.stato === "paid" ? " · Acconto pari al totale: salvando il lavoro risulterà Pagato." : "");
+    } catch (error) { elements.paymentPreview.textContent = error.message; }
+}
+
+function paymentDateText(job) {
+    const p = paymentRecord(job);
+    const date = value => new Intl.DateTimeFormat("it-IT", {dateStyle: "short", timeStyle: "short"}).format(new Date(value));
+    return [p.storico ? "Lavoro precedente: considerato pagato, data saldo non disponibile." : "",
+        p.dataAcconto ? `Primo acconto: ${date(p.dataAcconto)}` : "",
+        p.dataPagamento ? `Saldo: ${date(p.dataPagamento)}` : ""].filter(Boolean).join(" · ");
+}
+
+function paymentCardText(job) {
+    const p = paymentRecord(job);
+    const amounts = paymentAmounts(job);
+    return PAYMENT_LABELS[p.stato] + (p.stato === "partial" ? ` · Acconto ${formatCurrency(p.acconto)}` : "") +
+        (amounts.remaining > 0 ? ` · Restano ${formatCurrency(amounts.remaining)}` : "");
+}
+
+async function markJobPaid(id, button) {
+    const job = state.jobs.find(item => item.id === id);
+    if (!job || paymentAmounts(job).remaining <= 0) return;
+    button.disabled = true;
+    try {
+        const now = new Date().toISOString();
+        await updateJob({...job, pagamento: buildPayment(job, Number(job.ricavo), "paid", 0, now), modificatoIl: now});
+        await refreshJobs();
+    } catch (error) { handleDatabaseError(error); button.disabled = false; }
+}
+
+function renderPaymentSummary() {
+    const list = document.getElementById("unpaidJobs");
+    if (!list) return;
+    const totals = paymentTotals(state.jobs);
+    setText("paymentRemaining", formatCurrency(totals.remaining / 100));
+    setText("paymentReceived", formatCurrency(totals.received / 100));
+    const unpaid = state.jobs.filter(job => paymentAmounts(job).remaining > 0);
+    list.innerHTML = unpaid.length ? unpaid.map(job => `
+        <button type="button" class="unpaid-job" data-open-job="${job.id}">
+            <strong>${escapeHtml(job.cliente)}</strong>
+            <span>${escapeHtml(job.descrizione || "Lavoro")} · ${formatDate(job.data)}</span>
+            <span>${escapeHtml(paymentCardText(job))}</span>
+        </button>`).join("") : '<p class="payment-info">Nessun lavoro da incassare.</p>';
+    list.querySelectorAll("[data-open-job]").forEach(button => {
+        button.addEventListener("click", () => openEditJobModal(Number(button.dataset.openJob)));
+    });
+}
+
 
 /* =========================================================
    AVVIO APP
@@ -71,6 +134,7 @@ async function initializeApp() {
    ========================================================= */
 
 function cacheElements() {
+    ["paymentStatus", "paymentDeposit", "depositField", "paymentPreview", "paymentDates"].forEach(id => elements[id] = document.getElementById(id));
 
     elements.pages =
         document.querySelectorAll(".page");
@@ -395,6 +459,9 @@ function openNewJobModal() {
 
 
     elements.jobForm.reset();
+    elements.paymentStatus.value = "unpaid";
+    elements.paymentDeposit.value = "0";
+    elements.paymentDates.textContent = "";
 
 
     elements.jobId.value =
@@ -464,6 +531,10 @@ function openEditJobModal(id) {
 
     elements.jobRevenue.value =
         job.ricavo;
+    const payment = paymentRecord(job);
+    elements.paymentStatus.value = payment.stato;
+    elements.paymentDeposit.value = payment.acconto;
+    elements.paymentDates.textContent = paymentDateText(job);
 
 
     updateProfitPreview();
@@ -500,6 +571,8 @@ function closeJobModal() {
    ========================================================= */
 
 function setupJobForm() {
+    elements.paymentStatus.addEventListener("change", updatePaymentPreview);
+    elements.paymentDeposit.addEventListener("input", updatePaymentPreview);
 
     elements.jobForm.addEventListener(
         "submit",
@@ -581,8 +654,12 @@ function saveJob(event) {
     }
 
 
-    const now =
-        new Date().toISOString();
+    const now = new Date().toISOString();
+    const previous = state.jobs.find(job => job.id === state.editingJobId);
+    let pagamento;
+    try {
+        pagamento = buildPayment(previous, ricavo, elements.paymentStatus.value, Number(elements.paymentDeposit.value), now);
+    } catch (error) { alert(error.message); return; }
 
 
     if (state.editingJobId !== null) {
@@ -615,6 +692,8 @@ function saveJob(event) {
             costo,
 
             ricavo,
+
+            pagamento,
 
             modificatoIl: now
 
@@ -649,6 +728,8 @@ function saveJob(event) {
             ricavo,
 
             creatoIl: now,
+
+            pagamento,
 
             modificatoIl: now
 
@@ -689,6 +770,7 @@ function calculateProfit(job) {
 
 
 function updateProfitPreview() {
+    updatePaymentPreview();
 
     const costo =
         parseFloat(
@@ -938,7 +1020,9 @@ function renderJobCard(job) {
             </div>
 
 
+            <p class="payment-info">${escapeHtml(paymentCardText(job))}</p>
             <div class="job-actions">
+                ${paymentAmounts(job).remaining > 0 ? `<button class="job-action-button paid-job-button" data-paid-id="${job.id}" type="button">Segna come pagato</button>` : ""}
 
                 <button
                     class="job-action-button edit-job-button"
@@ -971,6 +1055,9 @@ function renderJobCard(job) {
    ========================================================= */
 
 function attachJobCardEvents() {
+    document.querySelectorAll(".paid-job-button").forEach(button => {
+        button.addEventListener("click", () => markJobPaid(Number(button.dataset.paidId), button));
+    });
 
     const editButtons =
         document.querySelectorAll(
@@ -1504,6 +1591,7 @@ function getSummaryPeriod() {
 }
 
 function updateSummary() {
+    renderPaymentSummary();
     if (!elements.summaryPeriod) return;
     updateSummaryYears();
     setText("summaryDateDisplay", formatDate(elements.summaryDate.value) || "Seleziona data");
@@ -1757,7 +1845,7 @@ async function handleImportFile(event) {
         const confirmed =
             confirm(
                 `Il backup contiene ${importedJobs.length} lavori.\n\n` +
-                `Vuoi sostituire i dati presenti sul dispositivo?`
+                `Vuoi sostituire i dati presenti sul dispositivo? Prima verrà scaricato un backup di sicurezza.`
             );
 
 
@@ -1771,6 +1859,11 @@ async function handleImportFile(event) {
         }
 
 
+        // Il backup di sicurezza include gli stessi dati completi dell'esportazione ordinaria.
+        const currentJobs = await getAllJobs();
+        if (currentJobs.length && !await exportDatabaseBackup(currentJobs, true)) {
+            throw new Error("Backup di sicurezza non riuscito: ripristino annullato.");
+        }
         await addMultipleJobs(importedJobs, true);
 
         await refreshJobs();

@@ -1,6 +1,22 @@
 # NQ8 — Stato dello sviluppo
 
-Aggiornato il 17 settembre 2026.
+Aggiornato il 23 settembre 2026.
+
+## Stato corrente: versione personale 1.1
+
+Gestione pagamenti implementata e testata su base `e4a0762`. Il 23 settembre 2026 Omar ha autorizzato la pubblicazione della 1.1. GitHub Pages pubblica automaticamente `main`.
+
+- Nuovo oggetto facoltativo `pagamento` nel lavoro: stato, acconto, date ISO del primo acconto e saldo. Totale autorevole: `ricavo`; residuo e incassato derivati. Costi/Ricavi/Guadagno invariati.
+- Scelta esplicita di Omar: tutti i lavori precedenti sono considerati pagati, anche nei backup legacy. Nessuna data inventata: stato storico con data saldo sconosciuta. Interpretazione additiva, nessuna riscrittura massiva e IndexedDB ancora versione 1.
+- Form con stato e acconto, validazione, residuo automatico; schede con stato e saldo rapido; riepilogo Da incassare e Incassato su tutto l’archivio.
+- Backup v2 compatibile v1; ripristino sostitutivo atomico, nessun merge; download di sicurezza prima della sostituzione.
+- Cache corrente `nq8-cache-v8-payments`, comprendente `payments.js`.
+- 14 gruppi di test automatici passati, compreso upgrade reale dalla 1.0/cache v7, riapertura, offline, backup e rollback. I test usano un browser isolato con soli dati fittizi.
+- Restano le verifiche su Safari/PWA iPhone e Android fisici e il salvataggio dei download sui dispositivi. Vedere [REPORT-PAGAMENTI.md](REPORT-PAGAMENTI.md).
+
+## Storico fino alla versione 1.0
+
+Le sezioni seguenti descrivono lo stato al 17 settembre; per cache e funzionalità correnti prevale la sezione 1.1 sopra.
 
 ## Progetto
 

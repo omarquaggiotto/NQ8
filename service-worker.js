@@ -1,10 +1,11 @@
-const CACHE_NAME = "nq8-cache-v7-stable";
+const CACHE_NAME = "nq8-cache-v8-payments";
 
 const APP_FILES = [
     "./",
     "./index.html",
     "./style.css",
     "./database.js",
+    "./payments.js",
     "./app.js",
     "./backup.js",
     "./manifest.json",

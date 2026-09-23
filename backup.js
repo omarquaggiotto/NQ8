@@ -8,14 +8,14 @@
    VERSIONE BACKUP
    ========================================================= */
 
-const BACKUP_VERSION = 1;
+const BACKUP_VERSION = 2;
 
 
 /* =========================================================
    ESPORTAZIONE DATABASE
    ========================================================= */
 
-async function exportDatabaseBackup(jobs) {
+async function exportDatabaseBackup(jobs, safety = false) {
 
     try {
 
@@ -32,6 +32,7 @@ async function exportDatabaseBackup(jobs) {
            CREAZIONE FILE BACKUP
         --------------------------------------------- */
 
+        jobs.forEach(validatePayment);
         const backupData = {
 
             app: "NQ8",
@@ -97,7 +98,7 @@ async function exportDatabaseBackup(jobs) {
 
 
         const filename =
-            `NQ8_backup_${year}-${month}-${day}.nq8`;
+            `NQ8_${safety ? "sicurezza_" : ""}backup_${year}-${month}-${day}${safety ? "_" + Date.now() : ""}.nq8`;
 
 
         /* ---------------------------------------------
@@ -142,9 +143,8 @@ async function exportDatabaseBackup(jobs) {
         );
 
 
-        alert(
-            "Backup esportato correttamente."
-        );
+        if (!safety) alert("Backup esportato correttamente.");
+        return true;
 
 
     } catch (error) {
@@ -158,6 +158,7 @@ async function exportDatabaseBackup(jobs) {
         alert(
             "Impossibile esportare i dati."
         );
+        return false;
 
     }
 
@@ -254,7 +255,7 @@ function importDatabaseBackup(file) {
                        NORMALIZZAZIONE DATI
                     ---------------------------------- */
 
-                    if (backup.version !== undefined && backup.version !== BACKUP_VERSION) {
+                    if (backup.version !== undefined && ![1, BACKUP_VERSION].includes(backup.version)) {
                         throw new Error("Versione del backup non supportata.");
                     }
                     const ids = new Set();
@@ -273,8 +274,10 @@ function importDatabaseBackup(file) {
                             !Number.isFinite(costo) || !Number.isFinite(ricavo) || costo < 0 || ricavo < 0) {
                             throw new Error("Dati non validi nel lavoro " + (index + 1));
                         }
+                        validatePayment({...job, ricavo});
                         ids.add(id);
                         return {
+                            ...job,
                             id, cliente, data, costo, ricavo,
                             descrizione: String(job.descrizione || ""),
                             creatoIl: job.creatoIl || new Date().toISOString(),

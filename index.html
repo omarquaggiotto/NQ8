@@ -98,6 +98,16 @@
             </div>
             <button id="viewSummaryJobs" class="primary-button summary-link" type="button">Vedi lavori del giorno</button>
 
+            <section class="summary-section payments-summary" aria-labelledby="paymentsHeading">
+                <h2 id="paymentsHeading">Da incassare</h2>
+                <p class="payment-info">Tutto l’archivio · importi aggiornati, indipendenti dal periodo selezionato.</p>
+                <div class="summary-grid">
+                    <div class="summary-card"><span class="summary-label">Da incassare</span><strong id="paymentRemaining">€ 0,00</strong></div>
+                    <div class="summary-card"><span class="summary-label">Incassato</span><strong id="paymentReceived">€ 0,00</strong></div>
+                </div>
+                <p class="payment-info">I lavori precedenti alla gestione pagamenti sono considerati pagati; la data del saldo non è disponibile.</p>
+                <div id="unpaidJobs" class="unpaid-list"></div>
+            </section>
         </section>
 
 
@@ -292,7 +302,7 @@
                     </span>
 
                     <small>
-                        Gestione lavori
+                        Gestione lavori · Versione 1.1
                     </small>
 
                 </div>
@@ -451,6 +461,21 @@
 
                 </div>
 
+
+                <div class="form-group">
+                    <label for="paymentStatus">Pagamento</label>
+                    <select id="paymentStatus" required>
+                        <option value="unpaid">Da pagare</option>
+                        <option value="partial">Acconto ricevuto</option>
+                        <option value="paid">Pagato</option>
+                    </select>
+                </div>
+                <div class="form-group" id="depositField" hidden>
+                    <label for="paymentDeposit">Acconto ricevuto (€)</label>
+                    <input id="paymentDeposit" type="number" min="0" step="0.01" inputmode="decimal" value="0">
+                </div>
+                <p id="paymentPreview" class="payment-info" aria-live="polite"></p>
+                <p id="paymentDates" class="payment-info"></p>
 
                 <!-- GUADAGNO AUTOMATICO -->
                 <div class="profit-preview">
@@ -612,6 +637,7 @@
          JAVASCRIPT
     ========================== -->
 
+    <script src="payments.js"></script>
     <script src="database.js"></script>
     <script src="backup.js"></script>
     <script src="app.js"></script>
